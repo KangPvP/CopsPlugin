@@ -7,7 +7,7 @@ public final class CopsPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is onEnable");
+        System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is onEnables");
 
     }
 
