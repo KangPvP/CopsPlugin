@@ -18,12 +18,41 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class Cops {
+    private static final Map<Integer, List<List<CopsRole>>> copsGroups = Cops.createCopsGroup();
 
-    public ArrayList<CopsRole> copsGroup1 = new ArrayList<>(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT));
+    public static Map<Integer, List<List<CopsRole>>> createCopsGroup(){
+
+        Map<Integer, List<List<CopsRole>>> copsGroups = new HashMap<>();
+
+        List<List<CopsRole>> copsGroups0 = new ArrayList<>();
+        copsGroups0.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT));
+        copsGroups0.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.GENDARME));
+        copsGroups.put(0, copsGroups0);
+
+        List<List<CopsRole>> copsGroups1 = new ArrayList<>();
+        copsGroups1.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT));
+        copsGroups1.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.GENDARME));
+        copsGroups.put(1, copsGroups1);
+
+        List<List<CopsRole>> copsGroups2 = new ArrayList<>();
+        copsGroups2.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.GENDARME, CopsRole.GENDARME));
+        copsGroups2.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.GENDARME, CopsRole.GENDARME));
+        copsGroups.put(2, copsGroups2);
+
+        return copsGroups;
+    }
+
+    public static List<CopsRole> selectCopsGroup(int stars) {
+        List<List<CopsRole>> groups = copsGroups.getOrDefault(stars, copsGroups.get(0));
+        int randomIndex = new Random().nextInt(groups.size());
+        return groups.get(randomIndex);
+    }
+
 
     public static HashMap<UUID, Cops> copsList = new HashMap<>();
 
     public ArrayList<Cops> listCops = new ArrayList<>();
+    public UUID idSection;
     public String name;
     public EntityType entityType;
     public HashMap<String, ItemStack> equipement;
@@ -31,12 +60,14 @@ public class Cops {
     public Player target;
     public long timePassive;
 
-    public Cops(CopsRole copRole, Player target){
+    public Cops(CopsRole copRole, Player target, UUID idSection, Location loc){
+        this.idSection = idSection;
         this.name = copRole.nameRole;
         this.entityType = copRole.creatureType;
         this.equipement = copRole.equipement;
-        this.entityCop = copsSpawn(target);
+        this.entityCop = copsSpawn(target, loc);
         this.target = target;
+
         this.timePassive = System.currentTimeMillis();
 
 
@@ -56,15 +87,19 @@ public class Cops {
     }
 
 
-    public Creature copsSpawn(Player target) {
+    public Creature copsSpawn(Player target, Location location) {
         EntityType entityType = this.entityType;
 
-        Creature creature = (Creature) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"),5,100,5), entityType);
+        Creature creature = (Creature) Bukkit.getWorld("world").spawnEntity(location, entityType);
 
         //creature.setCustomName(this.name);
         //creature.setCustomNameVisible(true);
 
-        creature = entityEquipement(creature, this.equipement);
+        EntityEquipment equip = creature.getEquipment();
+
+        assert equip != null;
+        equip.clear();
+
 
         creature.setMetadata("cops", new FixedMetadataValue(CopsPlugin.getInstance(), "cops"));
 
@@ -74,7 +109,15 @@ public class Cops {
 
         creature.setTarget(target);
 
-        return creature;
+        Zombie zombie = (Zombie) creature;
+
+        zombie.setAdult();
+
+        if(zombie.getVehicle() != null){
+            zombie.getVehicle().remove();
+        }
+
+        return (Creature) zombie;
     }
 
     public static ArrayList<Cops> cobsSeekPlayer(Player player){
@@ -144,13 +187,12 @@ public class Cops {
     }
 
 
-    public Creature entityEquipement(Creature creature, HashMap<String, ItemStack> equipement){
+    public static Creature entityEquipement(Creature creature, HashMap<String, ItemStack> equipement){
 
         EntityEquipment equip = creature.getEquipment();
 
-        if(equip == null){
-            return creature;
-        }
+        assert equip != null;
+        equip.clear();
 
         if(equipement.containsKey("helmet"))
             equip.setHelmet(equipement.get("helmet"));
@@ -172,7 +214,7 @@ public class Cops {
         //Display Name, EntityType, Equipement, Rangs, SpawnDistance
 
         SWATT("Swatt", EntityType.ZOMBIE, equipementCops("SWATT")),
-        GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME")),
+        GENDARME("Gendarme", EntityType.SKELETON, equipementCops("GENDARME")),
         BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER")),
         CAPORAL("Swatt", EntityType.ZOMBIE, equipementCops("CAPORAL")),
         SOLDAT("Swatt", EntityType.ZOMBIE, equipementCops("SOLDAT"));

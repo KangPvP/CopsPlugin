@@ -1,20 +1,26 @@
 package fr.kanpvp.copsplugin;
 
 import fr.kanpvp.copsplugin.cops.Cops;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class EntityCopsEvent implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event){
-        new Cops(Cops.CopsRole.SWATT, (Player) event.getPlayer());
+        new Cops(Cops.CopsRole.SWATT, (Player) event.getPlayer(), UUID.randomUUID(), new Location(Bukkit.getWorld("world"),5,100,5));
     }
 
     @EventHandler
@@ -48,11 +54,11 @@ public class EntityCopsEvent implements Listener {
                         if(cop.entityCop.getTarget() == null){
                             cop.setTarget((Player) damager);
                             cop.entityCop.setTarget((LivingEntity) damager);
-
                         }
                     }
                 }
             }
+
         }
     }
 
@@ -67,7 +73,50 @@ public class EntityCopsEvent implements Listener {
             cop.entityCop.setTarget(null);
         }
 
+        Player killer = player.getKiller();
+
+        if(killer != null){
+            int star = 1;
+
+            PlayerData pData = PlayerData.playerDataFromPlayer(killer);
+
+            assert pData != null;
+
+
+            UUID idSection = UUID.randomUUID();
+
+            Location locPlayer = killer.getLocation();
+
+            for(Cops.CopsRole role : Cops.selectCopsGroup(star)){
+                Cops cop = new Cops(role, killer, idSection, locPlayer);
+                cop.entityCop.setInvisible(true);
+
+                Vector ejectVec = getLookDirection(killer);
+                cop.entityCop.setVelocity(ejectVec.multiply(3 + new Random().nextInt(1)));
+
+                Bukkit.getScheduler().runTaskLater(CopsPlugin.getInstance(), new Runnable(){
+                    @Override
+                    public void run() {
+                        cop.entityCop.setInvisible(false);
+                        Cops.entityEquipement(cop.entityCop, cop.equipement);
+                    }
+                }, 20);
+
+            }
+
+
+
+        }
     }
+    public org.bukkit.util.Vector getLookDirection(Player player) {
+        double yaw = Math.toRadians(player.getLocation().getYaw() + (new Random().nextDouble(5-(-5)) + (-5)) );
+
+        double x = -Math.sin(yaw);
+        double z = Math.cos(yaw);
+
+        return new org.bukkit.util.Vector(x, 0,z).normalize();
+    }
+
 
 
 
