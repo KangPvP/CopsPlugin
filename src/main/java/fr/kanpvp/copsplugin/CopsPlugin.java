@@ -1,6 +1,7 @@
 package fr.kanpvp.copsplugin;
 
 import fr.kanpvp.copsplugin.cops.Cops;
+import fr.kanpvp.copsplugin.listeners.EntityCopsEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;

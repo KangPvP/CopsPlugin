@@ -1,18 +1,19 @@
-package fr.kanpvp.copsplugin;
+package fr.kanpvp.copsplugin.listeners;
 
+import fr.kanpvp.copsplugin.CopsPlugin;
+import fr.kanpvp.copsplugin.PlayerStar;
 import fr.kanpvp.copsplugin.cops.Cops;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -78,10 +79,9 @@ public class EntityCopsEvent implements Listener {
         if(killer != null){
             int star = 1;
 
-            PlayerData pData = PlayerData.playerDataFromPlayer(killer);
+            PlayerStar pData = PlayerStar.playerDataFromPlayer(killer);
 
             assert pData != null;
-
 
             UUID idSection = UUID.randomUUID();
 
@@ -94,15 +94,36 @@ public class EntityCopsEvent implements Listener {
                 Vector ejectVec = getLookDirection(killer);
                 cop.entityCop.setVelocity(ejectVec.multiply(3 + new Random().nextInt(1)));
 
-                Bukkit.getScheduler().runTaskLater(CopsPlugin.getInstance(), new Runnable(){
+                /*Bukkit.getScheduler().runTaskLater(CopsPlugin.getInstance(), new Runnable(){
                     @Override
                     public void run() {
                         cop.entityCop.setInvisible(false);
                         Cops.entityEquipement(cop.entityCop, cop.equipement);
                     }
-                }, 20);
-
+                }, 20);*/
             }
+
+            Cops.getCopsSection(idSection);
+            Bukkit.getScheduler().runTaskLater(CopsPlugin.getInstance(), new Runnable(){
+                @Override
+                public void run() {
+                    Location loc = new Location(Bukkit.getWorld("world"), 0,0,0);
+                    for(Cops cop : Cops.getCopsSection(idSection)){
+                        cop.entityCop.setInvisible(false);
+                        Cops.entityEquipement(cop.entityCop, cop.equipement);
+
+                        loc = cop.entityCop.getLocation();
+                    }
+                    Bukkit.getWorld("world").playSound(loc, Sound.ITEM_TOTEM_USE, 1F, 1F);
+                }
+            }, 20);
+
+
+
+
+
+
+
 
 
 
@@ -115,6 +136,14 @@ public class EntityCopsEvent implements Listener {
         double z = Math.cos(yaw);
 
         return new org.bukkit.util.Vector(x, 0,z).normalize();
+    }
+
+    @EventHandler
+    public void onPlayerDead(EntityDeathEvent event){
+        Entity entity = event.getEntity();
+        if(Cops.copsList.containsKey(entity.getUniqueId())){
+            Cops.copsList.remove(entity.getUniqueId());
+        }
     }
 
 

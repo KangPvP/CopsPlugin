@@ -2,7 +2,6 @@ package fr.kanpvp.copsplugin.cops;
 
 
 import fr.kanpvp.copsplugin.CopsPlugin;
-import fr.kanpvp.copsplugin.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -132,6 +131,19 @@ public class Cops {
             }
         }
         return copsSeek;
+    }
+
+    public static ArrayList<Cops> getCopsSection(UUID section){
+        ArrayList<Cops> copsSection = new ArrayList<>();
+
+        for (HashMap.Entry<UUID, Cops> entry : copsList.entrySet()) {
+            Cops cop = entry.getValue();
+
+            if(cop.idSection == section) {
+                copsSection.add(cop);
+            }
+        }
+        return copsSection;
     }
 
     public static void copsIA(){
