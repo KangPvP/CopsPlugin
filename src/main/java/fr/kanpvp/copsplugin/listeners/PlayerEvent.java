@@ -23,7 +23,7 @@ public class PlayerEvent implements Listener {
     public void onLeave(PlayerQuitEvent event){
         Player player = event.getPlayer();
 
-        //Supprésion du player de la list + enregistrement de ces etoile sur sa data Persistantes
+        //Supprésion du player de la list + enregistrement de ces etoile sur sa data Persistantes s
         if(PlayerStar.pDataList.containsKey(player.getUniqueId())){
             PlayerStar.pDataList.get(player.getUniqueId()).setDataStar();
             PlayerStar.pDataList.remove(player.getUniqueId());
