@@ -2,6 +2,7 @@ package fr.kanpvp.copsplugin.cops;
 
 
 import fr.kanpvp.copsplugin.CopsPlugin;
+import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -160,6 +161,8 @@ public class Cops {
 
                     Creature entityCop = cop.entityCop;
 
+                    WeaponMechanicsAPI.shoot(entityCop, "50_GS", Cops.getLookDirection(entityCop));
+
                     boolean playerInRange = false;
 
                     for(Entity entity : entityCop.getNearbyEntities(20,20,20)){
@@ -196,6 +199,15 @@ public class Cops {
 
             }
         }.runTaskTimer(CopsPlugin.getInstance(), 40, 10);
+    }
+
+    public static org.bukkit.util.Vector getLookDirection(LivingEntity entity) {
+        double yaw = Math.toRadians(entity.getLocation().getYaw() + (new Random().nextDouble(5-(-5)) + (-5)) );
+
+        double x = -Math.sin(yaw);
+        double z = Math.cos(yaw);
+
+        return new org.bukkit.util.Vector(x, 0,z).normalize();
     }
 
 

@@ -1,6 +1,11 @@
 package fr.kanpvp.copsplugin.listeners;
 
+import fr.kanpvp.copsplugin.CopsPlugin;
 import fr.kanpvp.copsplugin.PlayerStar;
+import me.deecaad.weaponmechanics.WeaponMechanics;
+import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
+import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponDamageEntityEvent;
+import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponEquipEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
