@@ -161,6 +161,7 @@ public class Cops {
 
                     Creature entityCop = cop.entityCop;
 
+
                     WeaponMechanicsAPI.shoot(entityCop, "50_GS", Cops.getLookDirection(entityCop));
 
                     boolean playerInRange = false;
