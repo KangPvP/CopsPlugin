@@ -1,6 +1,11 @@
 package fr.kanpvp.copsplugin.listeners;
 
+import fr.kanpvp.copsplugin.CopsPlugin;
 import fr.kanpvp.copsplugin.PlayerStar;
+import me.deecaad.weaponmechanics.WeaponMechanics;
+import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
+import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponDamageEntityEvent;
+import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponEquipEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +28,7 @@ public class PlayerEvent implements Listener {
     public void onLeave(PlayerQuitEvent event){
         Player player = event.getPlayer();
 
-        //Supprésion du player de la list + enregistrement de ces etoile sur sa data Persistantes ss
+        //Supprésion du player de la list + enregistrement de ces etoile sur sa data Persistantes sss
         if(PlayerStar.pDataList.containsKey(player.getUniqueId())){
             PlayerStar.pDataList.get(player.getUniqueId()).setDataStar();
             PlayerStar.pDataList.remove(player.getUniqueId());

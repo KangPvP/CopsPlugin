@@ -117,16 +117,6 @@ public class EntityCopsEvent implements Listener {
                     Bukkit.getWorld("world").playSound(loc, Sound.ITEM_TOTEM_USE, 1F, 1F);
                 }
             }, 20);
-
-
-
-
-
-
-
-
-
-
         }
     }
     public org.bukkit.util.Vector getLookDirection(Player player) {

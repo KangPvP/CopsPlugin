@@ -2,6 +2,9 @@ package fr.kanpvp.copsplugin.cops;
 
 
 import fr.kanpvp.copsplugin.CopsPlugin;
+import me.deecaad.weaponmechanics.WeaponMechanics;
+import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
+import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponGenerateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -160,6 +163,9 @@ public class Cops {
 
                     Creature entityCop = cop.entityCop;
 
+
+                    WeaponMechanicsAPI.shoot(entityCop, "50_GS", Cops.getLookDirection(entityCop));
+
                     boolean playerInRange = false;
 
                     for(Entity entity : entityCop.getNearbyEntities(20,20,20)){
@@ -198,6 +204,15 @@ public class Cops {
         }.runTaskTimer(CopsPlugin.getInstance(), 40, 10);
     }
 
+    public static org.bukkit.util.Vector getLookDirection(LivingEntity entity) {
+        double yaw = Math.toRadians(entity.getLocation().getYaw() + (new Random().nextDouble(5-(-5)) + (-5)) );
+
+        double x = -Math.sin(yaw);
+        double z = Math.cos(yaw);
+
+        return new org.bukkit.util.Vector(x, 0,z).normalize();
+    }
+
 
     public static Creature entityEquipement(Creature creature, HashMap<String, ItemStack> equipement){
 
@@ -205,6 +220,21 @@ public class Cops {
 
         assert equip != null;
         equip.clear();
+
+        /*String weaponTitle = "Artsd"
+
+        ItemStack weaponStack = WeaponMechanics.getConfigurations().getObject(weaponTitle + ".Info.Weapon_Item", ItemStack.class);
+        weaponStack = weaponStack.clone();
+        weaponStack.setAmount(1);
+
+        Bukkit.getPluginManager().callEvent(new WeaponGenerateEvent(weaponTitle, weaponStack, entity, data));*/
+
+        ItemStack weapon = new ItemStack(Material.FEATHER, 1);
+        ItemMeta weaponM = weapon.getItemMeta();
+        weaponM.setCustomModelData(6);
+        weapon.setItemMeta(weaponM);
+
+        equip.setItemInMainHand(new ItemStack(Material.IRON_SWORD, 1));
 
         if(equipement.containsKey("helmet"))
             equip.setHelmet(equipement.get("helmet"));
