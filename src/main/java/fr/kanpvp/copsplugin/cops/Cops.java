@@ -2,9 +2,7 @@ package fr.kanpvp.copsplugin.cops;
 
 
 import fr.kanpvp.copsplugin.CopsPlugin;
-import me.deecaad.weaponmechanics.WeaponMechanics;
 import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
-import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponGenerateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -164,16 +162,25 @@ public class Cops {
                     Creature entityCop = cop.entityCop;
 
 
-                    WeaponMechanicsAPI.shoot(entityCop, "50_GS", Cops.getLookDirection(entityCop));
-
                     boolean playerInRange = false;
 
                     for(Entity entity : entityCop.getNearbyEntities(20,20,20)){
                         if(entity instanceof Player){
                             if(cop.target != null){
                                 if(entity.getUniqueId().equals(cop.target.getUniqueId())){
-
                                     entityCop.setTarget((LivingEntity) entity);
+
+                                    //String weaponTile = WeaponMechanicsAPI.getWeaponTitle(cop.equipement.get("item"));
+                                    //System.out.println(weaponTile);
+                                    //if(weaponTile != null){
+                                        //Entity 1 = entityCop, Entity 2 = entity (Player)
+                                        if(entityCanSee(entityCop, entity)){
+                                            System.out.println("can see");
+                                            WeaponMechanicsAPI.shoot(entityCop, "ak47", getLookDirection(entityCop.getLocation().getYaw(), entity.getLocation().getPitch()));
+                                        } else {
+                                            System.out.println("can't see");
+                                        }
+                                    //}
 
                                     cop.setTimePassive(System.currentTimeMillis());
                                     playerInRange = true;
@@ -212,6 +219,38 @@ public class Cops {
 
         return new org.bukkit.util.Vector(x, 0,z).normalize();
     }
+    public static org.bukkit.util.Vector getLookDirection(float yaw, float pitch) {
+        // Convert the Yaw and Pitch from degrees to radians
+        double yawRadians = Math.toRadians(yaw);
+        double pitchRadians = Math.toRadians(pitch);
+
+        // Calculate the X, Y and Z components of the direction vector using trigonometric functions
+        double x = -Math.sin(yawRadians) * Math.cos(pitchRadians);
+        double y = Math.sin(pitchRadians);
+        double z = Math.cos(yawRadians) * Math.cos(pitchRadians);
+
+        return new org.bukkit.util.Vector(x,y,z);
+    }
+
+    public static org.bukkit.util.Vector getVectorBetweenEntities(Entity entity1, Entity entity2) {
+        org.bukkit.util.Vector entity1Location = entity1.getLocation().toVector();
+        org.bukkit.util.Vector entity2Location = entity2.getLocation().toVector();
+        return entity2Location.subtract(entity1Location);
+    }
+
+    public static double angleBetweenVectors(org.bukkit.util.Vector v1, org.bukkit.util.Vector v2) {
+        double dotProduct = v1.dot(v2);
+        double magnitudesProduct = v1.length() * v2.length();
+        double angleRadians = Math.acos(dotProduct / magnitudesProduct);
+        return Math.toDegrees(angleRadians);
+    }
+
+    private static boolean entityCanSee(Entity entity1, Entity entity2) {
+        org.bukkit.util.Vector vector1 = getVectorBetweenEntities(entity1, entity2);
+        org.bukkit.util.Vector vector2 = getLookDirection(entity1.getLocation().getYaw(), entity2.getLocation().getPitch());
+        double angle = angleBetweenVectors(vector1, vector2);
+        return angle < 120/2;
+    }
 
 
     public static Creature entityEquipement(Creature creature, HashMap<String, ItemStack> equipement){
@@ -228,13 +267,6 @@ public class Cops {
         weaponStack.setAmount(1);
 
         Bukkit.getPluginManager().callEvent(new WeaponGenerateEvent(weaponTitle, weaponStack, entity, data));*/
-
-        ItemStack weapon = new ItemStack(Material.FEATHER, 1);
-        ItemMeta weaponM = weapon.getItemMeta();
-        weaponM.setCustomModelData(6);
-        weapon.setItemMeta(weaponM);
-
-        equip.setItemInMainHand(new ItemStack(Material.IRON_SWORD, 1));
 
         if(equipement.containsKey("helmet"))
             equip.setHelmet(equipement.get("helmet"));
@@ -277,6 +309,7 @@ public class Cops {
 
             if(name.equalsIgnoreCase("SWATT")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
+                equipement.put("item", itemCreate(Material.FEATHER, 121)); //Ak47
 
             } else if(name.equalsIgnoreCase("GENDARME")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
