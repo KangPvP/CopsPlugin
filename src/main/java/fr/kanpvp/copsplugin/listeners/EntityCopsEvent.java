@@ -3,6 +3,7 @@ package fr.kanpvp.copsplugin.listeners;
 import fr.kanpvp.copsplugin.CopsPlugin;
 import fr.kanpvp.copsplugin.PlayerStar;
 import fr.kanpvp.copsplugin.cops.Cops;
+import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponDamageEntityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -33,13 +34,22 @@ public class EntityCopsEvent implements Listener {
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
         if(damager instanceof Player){
+
+
             //Si l'entity is a Cops
             if(Cops.copsList.containsKey(entity.getUniqueId())){
                 Cops cop = Cops.copsList.get(entity.getUniqueId());
-                //Si le cop n'est pas occupé
-                if(cop.entityCop.getTarget() == null){
-                    cop.setTarget((Player) damager);
+                if(cop.entityCop.isInvisible()){
+                    event.setCancelled(true);
+                } else {
+                    //Si le cop n'est pas occupé
+                    if(cop.entityCop.getTarget() == null){
+                        cop.setTarget((Player) damager);
+                    }
                 }
+
+
+
             }
 
             //Si un joueurs Frappe un autre joueur les cops Au alentour interviennent
@@ -90,17 +100,11 @@ public class EntityCopsEvent implements Listener {
             for(Cops.CopsRole role : Cops.selectCopsGroup(star)){
                 Cops cop = new Cops(role, killer, idSection, locPlayer);
                 cop.entityCop.setInvisible(true);
+                cop.entityCop.setGlowing(true);
 
                 Vector ejectVec = getLookDirection(killer);
                 cop.entityCop.setVelocity(ejectVec.multiply(3 + new Random().nextInt(1)));
 
-                /*Bukkit.getScheduler().runTaskLater(CopsPlugin.getInstance(), new Runnable(){
-                    @Override
-                    public void run() {
-                        cop.entityCop.setInvisible(false);
-                        Cops.entityEquipement(cop.entityCop, cop.equipement);
-                    }
-                }, 20);*/
             }
 
             Cops.getCopsSection(idSection);
@@ -110,6 +114,9 @@ public class EntityCopsEvent implements Listener {
                     Location loc = new Location(Bukkit.getWorld("world"), 0,0,0);
                     for(Cops cop : Cops.getCopsSection(idSection)){
                         cop.entityCop.setInvisible(false);
+
+                        cop.entityCop.setTarget(cop.target);
+
                         Cops.entityEquipement(cop.entityCop, cop.equipement);
 
                         loc = cop.entityCop.getLocation();
@@ -165,10 +172,32 @@ public class EntityCopsEvent implements Listener {
         Entity entity = event.getEntity();
 
         if(Cops.copsList.containsKey(entity.getUniqueId())){
-
             if(event.getReason().equals(EntityTargetEvent.TargetReason.CLOSEST_PLAYER)){ //Attaque le joueur le plus proche si target NULL
                 event.setCancelled(true);
             } else if(event.getReason().equals(EntityTargetEvent.TargetReason.COLLISION)){ //Collision Nouveau calcul du Target
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDamageWeapon(WeaponDamageEntityEvent event){
+        Entity shooter = event.getShooter();
+        Entity victim = event.getVictim();
+
+        // If player Shoot a Cops Invisible
+        if(shooter instanceof Player){
+            if(Cops.copsList.containsKey(victim.getUniqueId())){
+                if(Cops.copsList.get(victim.getUniqueId()).entityCop.isInvisible()){
+                    event.setCancelled(true);
+                }
+            }
+        }
+
+
+        //Check if a cop Shoot an other cop
+        if(Cops.copsList.containsKey(shooter.getUniqueId())){
+            if(Cops.copsList.containsKey(victim.getUniqueId())){
                 event.setCancelled(true);
             }
         }
