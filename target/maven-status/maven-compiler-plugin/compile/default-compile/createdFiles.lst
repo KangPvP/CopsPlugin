@@ -1,0 +1,12 @@
+fr\kanpvp\copsplugin\cops\CopsGroup.class
+fr\kanpvp\copsplugin\listeners\EntityCopsEvent.class
+fr\kanpvp\copsplugin\cops\Cops$1.class
+fr\kanpvp\copsplugin\listeners\EntityDamageEvent.class
+fr\kanpvp\copsplugin\utlis\VectorCal.class
+fr\kanpvp\copsplugin\listeners\EntityDeadEvent$1.class
+fr\kanpvp\copsplugin\listeners\EntityDeadEvent.class
+fr\kanpvp\copsplugin\listeners\PlayerEvent.class
+fr\kanpvp\copsplugin\PlayerStar.class
+fr\kanpvp\copsplugin\cops\Cops$CopsRole.class
+fr\kanpvp\copsplugin\CopsPlugin.class
+fr\kanpvp\copsplugin\cops\Cops.class
