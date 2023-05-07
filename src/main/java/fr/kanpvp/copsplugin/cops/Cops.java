@@ -145,15 +145,10 @@ public class Cops {
                                 if(entity.getUniqueId().equals(cop.target.getUniqueId())){
                                     entityCop.setTarget((LivingEntity) entity);
 
-                                    //String weaponTile = WeaponMechanicsAPI.getWeaponTitle(cop.equipement.get("item"));
-                                    //System.out.println(weaponTile);
-                                    //if(weaponTile != null){
-                                        //Entity 1 = entityCop, Entity 2 = entity (Player)
                                     if(cop.weaponTitle != null){
                                         if(CopsPlugin.getVectorCal().entityCanSee(entityCop, entity)){ //If player is in front of the cop
-                                            System.out.println(CopsPlugin.getVectorCal().getLookDirection(entity.getLocation().getYaw(), entityCop.getLocation().getYaw()).toString());
                                             //WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getVectorBetweenEntities(entityCop,entity));
-                                            WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entity.getLocation().getYaw(), entityCop.getLocation().getYaw()).add(new Vector(0,0.15,0)).normalize() );
+                                            WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entityCop.getLocation().getYaw(), entityCop.getLocation().getPitch()) );
                                         }
                                     }
 
