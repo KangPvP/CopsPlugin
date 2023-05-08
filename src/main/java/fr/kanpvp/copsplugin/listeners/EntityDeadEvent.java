@@ -3,8 +3,10 @@ package fr.kanpvp.copsplugin.listeners;
 import fr.kanpvp.copsplugin.CopsPlugin;
 import fr.kanpvp.copsplugin.PlayerStar;
 import fr.kanpvp.copsplugin.cops.Cops;
+import fr.kanpvp.copsplugin.utlis.randomdraw.ManagerDraw;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -91,7 +94,10 @@ public class EntityDeadEvent implements Listener {
             Cops.copsList.remove(entity.getUniqueId());
 
             if(killer != null){
-
+                boolean stats = new ManagerDraw().getRandomBoolean(20);
+                if(stats){
+                    killer.getInventory().addItem(new ItemStack(Material.ACACIA_TRAPDOOR));
+                }
             }
 
 
