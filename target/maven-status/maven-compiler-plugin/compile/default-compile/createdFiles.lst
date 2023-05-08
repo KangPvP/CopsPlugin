@@ -7,6 +7,8 @@ fr\kanpvp\copsplugin\listeners\EntityDeadEvent$1.class
 fr\kanpvp\copsplugin\listeners\EntityDeadEvent.class
 fr\kanpvp\copsplugin\listeners\PlayerEvent.class
 fr\kanpvp\copsplugin\PlayerStar.class
+fr\kanpvp\copsplugin\utlis\randomdraw\ManagerDraw.class
 fr\kanpvp\copsplugin\cops\Cops$CopsRole.class
 fr\kanpvp\copsplugin\CopsPlugin.class
 fr\kanpvp\copsplugin\cops\Cops.class
+fr\kanpvp\copsplugin\utlis\randomdraw\EventLoot.class

@@ -1,8 +1,10 @@
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\listeners\EntityCopsEvent.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\CopsPlugin.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\PlayerStar.java
+G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\utlis\randomdraw\ManagerDraw.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\listeners\EntityDeadEvent.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\listeners\PlayerEvent.java
+G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\utlis\randomdraw\EventLoot.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\utlis\VectorCal.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\listeners\EntityDamageEvent.java
 G:\Code\MCPlugin\CopsPlugin\src\main\java\fr\kanpvp\copsplugin\cops\Cops.java

@@ -59,7 +59,7 @@
             <artifactId>weaponmechanics</artifactId>
             <version>2.2.5</version>
             <scope>system</scope>
-            <systemPath>${basedir}/WeaponMechanics-2.2.5.jar</systemPath>
+            <systemPath>${basedir}/WeaponMechanics-2.2.6.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.deecaad</groupId>

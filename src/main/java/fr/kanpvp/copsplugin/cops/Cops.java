@@ -2,6 +2,7 @@ package fr.kanpvp.copsplugin.cops;
 
 
 import fr.kanpvp.copsplugin.CopsPlugin;
+import fr.kanpvp.copsplugin.PlayerStar;
 import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,6 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cops {
     private static final Map<Integer, List<List<CopsRole>>> copsGroups = Cops.createCopsGroup();
@@ -95,6 +97,7 @@ public class Cops {
         return (Creature) creature;
     }
 
+
     public static ArrayList<Cops> cobsSeekPlayer(Player player){
         ArrayList<Cops> copsSeek = new ArrayList<>();
 
@@ -130,7 +133,7 @@ public class Cops {
 
                 ArrayList<UUID> copsOff = new ArrayList<>();
 
-                for (HashMap.Entry<UUID, Cops> entry : copsList.entrySet()) { //ForEach value in HashMap
+                for (HashMap.Entry<UUID, Cops> entry : copsList.entrySet()) { //ForEach value in HashMap / EACH cops
                     UUID id = entry.getKey();
                     Cops cop = entry.getValue();
 
@@ -138,7 +141,72 @@ public class Cops {
 
                     boolean playerInRange = false;
 
-                    for(Entity entity : entityCop.getNearbyEntities(20,20,20)){
+
+                    List<Player> playersInRange1 = new ArrayList<>();
+                    List<Player> playersInRange2 = new ArrayList<>();
+                    List<Player> playersInRange3 = new ArrayList<>();
+
+                    List<Player> allPlayersInRange = entityCop.getNearbyEntities(100, 100, 100)
+                            .stream()
+                            .filter(entity -> entity instanceof Player)
+                            .map(entity -> (Player) entity)
+                            .distinct()
+                            .collect(Collectors.toList());
+
+                    for (Player player : allPlayersInRange) {
+                        double distance = player.getLocation().distance(entityCop.getLocation());
+                        if (distance <= 20) {
+                            playersInRange1.add(player);
+                        } else if (distance <= 50) {
+                            playersInRange2.add(player);
+                        } else {
+                            playersInRange3.add(player);
+                        }
+                    }
+
+                    if(cop.target != null){
+                        Player player = cop.target;
+                        if(playersInRange1.contains(player)){
+                            entityCop.setTarget((LivingEntity) player);
+
+                            if(cop.weaponTitle != null){
+                                if(CopsPlugin.getVectorCal().entityCanSee(entityCop, player)){ //If player is in front of the cop
+                                    WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, entityCop.getLocation().getDirection().normalize() );
+                                }
+                            }
+                            cop.setTimePassive(System.currentTimeMillis());
+                            playerInRange = true;
+
+                        }else if(playersInRange2.contains(cop.target)){
+                            if(PlayerStar.playerDataFromPlayer(player).getStar() > 2 ){
+                                entityCop.setTarget((LivingEntity) cop.target);
+
+                                if(cop.weaponTitle != null){
+                                    if(CopsPlugin.getVectorCal().entityCanSee(entityCop, cop.target)){ //If player is in front of the cop
+                                        WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entityCop.getLocation().getYaw(), entityCop.getLocation().getPitch()) );
+                                    }
+                                }
+                                cop.setTimePassive(System.currentTimeMillis());
+                                playerInRange = true;
+                            }
+                        }else if(playersInRange3.contains(cop.target)){
+                            if(PlayerStar.playerDataFromPlayer(player).getStar() > 4 ){
+                                entityCop.setTarget((LivingEntity) cop.target);
+
+                                if(cop.weaponTitle != null){
+                                    if(CopsPlugin.getVectorCal().entityCanSee(entityCop, cop.target)){ //If player is in front of the cop
+                                        WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entityCop.getLocation().getYaw(), entityCop.getLocation().getPitch()) );
+                                    }
+                                }
+                                cop.setTimePassive(System.currentTimeMillis());
+                                playerInRange = true;
+                            }
+                        }
+                    }
+
+
+
+                    /*for(Entity entity : entityCop.getNearbyEntities(20,20,20)){ //ForEach Player
                         if(entity instanceof Player){
                             if(cop.target != null){
                                 if(entity.getUniqueId().equals(cop.target.getUniqueId())){
@@ -155,11 +223,10 @@ public class Cops {
                                     playerInRange = true;
                                 }
                             }
-
                         }
-                    }
+                    }*/
 
-                    if(playerInRange == false){
+                    if(!playerInRange){
                         if(entityCop.getTarget() != null){
                             entityCop.setTarget(null);
                             cop.setTimePassive(System.currentTimeMillis());
@@ -216,7 +283,7 @@ public class Cops {
         //Display Name, EntityType, Equipement, Rangs, SpawnDistance
 
         SWATT("Swatt", EntityType.ZOMBIE, equipementCops("SWATT")),
-        GENDARME("Gendarme", EntityType.SKELETON, equipementCops("GENDARME")),
+        GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME")),
         BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER")),
         CAPORAL("Swatt", EntityType.ZOMBIE, equipementCops("CAPORAL")),
         SOLDAT("Swatt", EntityType.ZOMBIE, equipementCops("SOLDAT"));
@@ -244,6 +311,7 @@ public class Cops {
             } else if(name.equalsIgnoreCase("GENDARME")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
                 equipement.put("chestplate", itemCreate(Material.CHAINMAIL_CHESTPLATE, 0));
+                equipement.put("item", itemCreate(Material.FEATHER, 201)); //50_GS
 
             } else if(name.equalsIgnoreCase("BRIGADIER")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
@@ -309,6 +377,7 @@ public class Cops {
         HashMap<Integer, String> weapons = new HashMap<Integer, String>();
 
         weapons.put(121, "AK_47");
+        weapons.put(201, "50_GS");
 
         return weapons;
     }

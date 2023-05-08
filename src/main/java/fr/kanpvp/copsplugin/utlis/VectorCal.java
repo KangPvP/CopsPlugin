@@ -19,7 +19,7 @@ public class VectorCal {
 
     public boolean entityCanSee(Entity entity1, Entity entity2) {
         org.bukkit.util.Vector vector1 = getVectorBetweenEntities(entity1, entity2);
-        org.bukkit.util.Vector vector2 = getLookDirection(entity1.getLocation().getYaw(), entity2.getLocation().getPitch());
+        org.bukkit.util.Vector vector2 = entity1.getLocation().getDirection().normalize();
         double angle = angleBetweenVectors(vector1, vector2);
         return angle < 120/2;
     }

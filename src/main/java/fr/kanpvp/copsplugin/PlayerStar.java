@@ -65,6 +65,15 @@ public class PlayerStar {
         data.set(namespacedKey, PersistentDataType.INTEGER, star);
     }
 
+    public void addStar(){
+        int star = this.star;
+
+        if(star < 5){
+            this.setStar(star + 1);
+        }
+
+    }
+
 
 
 
