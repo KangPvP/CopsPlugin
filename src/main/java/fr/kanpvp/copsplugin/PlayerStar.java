@@ -1,9 +1,6 @@
 package fr.kanpvp.copsplugin;
 
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -15,7 +12,7 @@ public class PlayerStar {
 
     public PlayerStar(Player player){
         this.player = player;
-        this.star = getDataStar(player);
+        this.star = 0;
         pDataList.put(player.getUniqueId(), this);
     }
 
@@ -36,7 +33,7 @@ public class PlayerStar {
         return null;
     }
 
-    public int getDataStar(Player player){
+    /*public int getDataStar(Player player){
         NamespacedKey namespacedKey = new NamespacedKey(CopsPlugin.getInstance(), "star");
 
         PersistentDataContainer data = player.getPersistentDataContainer();
@@ -63,7 +60,7 @@ public class PlayerStar {
         }
 
         data.set(namespacedKey, PersistentDataType.INTEGER, star);
-    }
+    }*/
 
     public void addStar(){
         int star = this.star;

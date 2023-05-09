@@ -4,6 +4,7 @@ import fr.kanpvp.copsplugin.cops.Cops;
 import fr.kanpvp.copsplugin.listeners.EntityCopsEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDamageEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDeadEvent;
+import fr.kanpvp.copsplugin.listeners.PlayerEvent;
 import fr.kanpvp.copsplugin.utlis.VectorCal;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,6 +22,7 @@ public final class CopsPlugin extends JavaPlugin {
 
         System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is on Enables");
 
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityCopsEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDeadEvent(), this);

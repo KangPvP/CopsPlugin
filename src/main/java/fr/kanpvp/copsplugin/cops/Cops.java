@@ -112,6 +112,22 @@ public class Cops {
         return copsSeek;
     }
 
+    public static ArrayList<Cops> cobsSeekPlayerReel(Player player){
+        ArrayList<Cops> copsSeek = new ArrayList<>();
+
+        for (HashMap.Entry<UUID, Cops> entry : copsList.entrySet()) {
+            UUID id = entry.getKey();
+            Cops cop = entry.getValue();
+
+            if(cop.entityCop.getTarget() == player){
+                copsSeek.add(cop);
+            }
+        }
+        return copsSeek;
+    }
+
+
+
     public static ArrayList<Cops> getCopsSection(UUID section){
         ArrayList<Cops> copsSection = new ArrayList<>();
 
