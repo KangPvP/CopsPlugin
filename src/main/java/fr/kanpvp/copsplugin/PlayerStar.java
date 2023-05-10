@@ -104,7 +104,7 @@ public class PlayerStar {
             @Override
             public void run() {
                 for(Player player : Bukkit.getServer().getOnlinePlayers()){
-                    ArrayList<Cops> recherche = Cops.cobsSeekPlayerReel(player); //If hash map vide => Player n'est plus recherché
+                    ArrayList<Cops> recherche = Cops.cobsSeekPlayerReel(player); //If hash map vide => Player n'est plus recherché || BUG when Police spawn, they don't have a Target
                     PlayerStar playerStar = PlayerStar.playerDataFromPlayer(player);
                     assert playerStar != null;
                     double star = playerStar.getStar();
