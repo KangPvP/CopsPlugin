@@ -77,6 +77,7 @@ public class EntityDeadEvent implements Listener {
 
                     //Star + 1
                     PlayerStar.playerDataFromPlayer(killer).addStar();
+                    killer.sendMessage("Vous avez " + PlayerStar.playerDataFromPlayer(killer).getStar());
                     //Spawn Section Cops
                     spawnCopsSection(killer, entity.getLocation());
                 }
@@ -91,10 +92,11 @@ public class EntityDeadEvent implements Listener {
 
         //PlayerStar playerStar = PlayerStar.playerDataFromPlayer(target);
         //assert playerStar != null;
-        int star = 1;
+        double star = PlayerStar.playerDataFromPlayer(target).getStar();
 
 
-        for(Cops.CopsRole role : Cops.selectCopsGroup(star)){
+
+        for(Cops.CopsRole role : Cops.selectCopsGroup(1)){
             Cops cop = new Cops(role, target, idSection, loc); //Spawn Cops
             cop.entityCop.setInvisible(true);
             cop.entityCop.setGlowing(true);

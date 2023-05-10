@@ -3,8 +3,6 @@ package fr.kanpvp.copsplugin.utlis;
 import fr.kanpvp.copsplugin.CopsPlugin;
 import fr.kanpvp.copsplugin.PlayerStar;
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,16 +11,16 @@ import java.util.HashMap;
 
 public class Bar {
 
-    HashMap<Integer, BossBar> listBossBar = createBossBarData();
+    //HashMap<Integer, BossBar> listBossBar = createBossBarData();
 
     public static HashMap<Player, BossBar> dataPlayerBar = new HashMap<>();
 
     public Bar(){
-        testReseek();
+        barActus();
     }
 
 
-    public BossBar getBar(int idBar) {
+    /*public BossBar getBar(int idBar) {
         return listBossBar.get(idBar);
     }
 
@@ -34,12 +32,12 @@ public class Bar {
         }
 
         return map;
-    }
+    }*/
 
 
 
 
-    public void testReseek(){
+    public void barActus(){
 
         new BukkitRunnable(){
 

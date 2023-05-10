@@ -20,17 +20,11 @@ public class PlayerEvent implements Listener {
 
         if(!PlayerStar.pDataList.containsKey(player.getUniqueId())){
             new PlayerStar(player);
-
-
-            BossBar bar = Bukkit.createBossBar("fsdfddsfdsf", BarColor.BLUE, BarStyle.SOLID);
-            bar.addPlayer(player);
-            BossBar bar1 = Bukkit.createBossBar("fsdfddsfdsf", BarColor.BLUE, BarStyle.SOLID);
-            bar1.addPlayer(player);
-
         }
 
-
-        Bar.dataPlayerBar.put(player, Bukkit.createBossBar("star0", BarColor.BLUE, BarStyle.SOLID));
+        BossBar bar = Bukkit.createBossBar("star0", BarColor.BLUE, BarStyle.SOLID);
+        bar.addPlayer(player);
+        Bar.dataPlayerBar.put(player, bar);
 
 
     }

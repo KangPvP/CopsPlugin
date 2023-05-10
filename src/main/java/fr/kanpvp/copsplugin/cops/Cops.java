@@ -115,10 +115,14 @@ public class Cops {
     public static ArrayList<Cops> cobsSeekPlayerReel(Player player){
         ArrayList<Cops> copsSeek = new ArrayList<>();
 
-        for (HashMap.Entry<UUID, Cops> entry : copsList.entrySet()) {
-            UUID id = entry.getKey();
-            Cops cop = entry.getValue();
+        List<Cops> allPlayersInRange = player.getNearbyEntities(20, 20, 20)
+                .stream()
+                .filter(entity -> copsList.containsKey(entity.getUniqueId()))
+                .map(entity -> copsList.get(entity.getUniqueId()))
+                .distinct()
+                .collect(Collectors.toList());
 
+        for (Cops cop : allPlayersInRange) {
             if(cop.entityCop.getTarget() == player){
                 copsSeek.add(cop);
             }

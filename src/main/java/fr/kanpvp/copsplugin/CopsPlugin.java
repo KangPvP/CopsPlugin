@@ -5,6 +5,7 @@ import fr.kanpvp.copsplugin.listeners.EntityCopsEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDamageEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDeadEvent;
 import fr.kanpvp.copsplugin.listeners.PlayerEvent;
+import fr.kanpvp.copsplugin.utlis.Bar;
 import fr.kanpvp.copsplugin.utlis.VectorCal;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +20,8 @@ public final class CopsPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         vectorCal = new VectorCal();
+        PlayerStar.starActus();
+        new Bar();
 
         System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is on Enables");
 

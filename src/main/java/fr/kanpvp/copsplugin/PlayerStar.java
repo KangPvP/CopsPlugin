@@ -99,7 +99,7 @@ public class PlayerStar {
         }
     }
 
-    public void starActus(){
+    public static void starActus(){
         new BukkitRunnable(){
             @Override
             public void run() {
@@ -116,7 +116,6 @@ public class PlayerStar {
 
                                 //Changé le titre le la boss Bar
                                 //Changé de boss bar
-
                             }
 
                         } else {  //Star end
@@ -129,6 +128,7 @@ public class PlayerStar {
                     if(star != 0 && star % 1 != 0){ //If star != 0 and star is .. .5
                         if(playerStar.lastTimeChange + 10*1000 < System.currentTimeMillis()){ //If 10 de Star End
                             playerStar.setStar(0);
+                            player.sendMessage("Vous avez perdu vos étoiles");
                         }
                     }
                 }
