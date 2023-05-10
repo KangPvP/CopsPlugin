@@ -10,9 +10,13 @@ public class PlayerStar {
     public Player player;
     public double star;
 
+    public Long lastTimeChange;
+
     public PlayerStar(Player player){
         this.player = player;
         this.star = 0;
+        this.lastTimeChange = System.currentTimeMillis();
+
         pDataList.put(player.getUniqueId(), this);
     }
 
