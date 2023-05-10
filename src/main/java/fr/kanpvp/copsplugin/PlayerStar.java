@@ -8,7 +8,7 @@ import java.util.UUID;
 public class PlayerStar {
     public static HashMap<UUID, PlayerStar> pDataList = new HashMap<>();
     public Player player;
-    public int star;
+    public double star;
 
     public PlayerStar(Player player){
         this.player = player;
@@ -16,11 +16,11 @@ public class PlayerStar {
         pDataList.put(player.getUniqueId(), this);
     }
 
-    public int getStar(){
+    public double getStar(){
         return this.star;
     }
 
-    public void setStar(int star){
+    public void setStar(double star){
         this.star = star;
         pDataList.put(player.getUniqueId(), this);
     }
@@ -63,14 +63,32 @@ public class PlayerStar {
     }*/
 
     public void addStar(){
-        int star = this.star;
+        double star = this.star;
 
-        if(star < 5){
-            this.setStar(star + 1);
+        if(star < 5.5){
+            if(star % 1 == 0){
+                this.setStar(star + 1.0);
+            } else {
+                this.setStar(star + 0.5);
+            }
         }
-
     }
 
+    public void endStar(){
+        double star = this.star;
+
+        if(star < 5){
+            this.setStar(star + 0.5);
+        }
+    }
+
+    public void endStarCancel(){
+        double star = this.star;
+
+        if(star < 5){
+            this.setStar(star - 0.5);
+        }
+    }
 
 
 

@@ -1,6 +1,7 @@
 package fr.kanpvp.copsplugin.listeners;
 
 import fr.kanpvp.copsplugin.PlayerStar;
+import fr.kanpvp.copsplugin.utlis.Bar;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -19,12 +20,19 @@ public class PlayerEvent implements Listener {
 
         if(!PlayerStar.pDataList.containsKey(player.getUniqueId())){
             new PlayerStar(player);
+
+
             BossBar bar = Bukkit.createBossBar("fsdfddsfdsf", BarColor.BLUE, BarStyle.SOLID);
             bar.addPlayer(player);
             BossBar bar1 = Bukkit.createBossBar("fsdfddsfdsf", BarColor.BLUE, BarStyle.SOLID);
             bar1.addPlayer(player);
 
         }
+
+
+        Bar.dataPlayerBar.put(player, Bukkit.createBossBar("star0", BarColor.BLUE, BarStyle.SOLID));
+
+
     }
 
     @EventHandler
