@@ -70,7 +70,7 @@ public class EntityDeadEvent implements Listener {
         if(Cops.copsList.containsKey(entity.getUniqueId())){
             Cops.copsList.remove(entity.getUniqueId());
 
-            if(killer != null){
+            if(killer != null && killer instanceof Player){
                 boolean stats = new ManagerDraw().getRandomBoolean(30);
                 if(stats){
                     killer.getInventory().addItem(new ItemStack(Material.ACACIA_TRAPDOOR));
