@@ -115,7 +115,21 @@ public class Cops {
     public static ArrayList<Cops> cobsSeekPlayerReel(Player player){
         ArrayList<Cops> copsSeek = new ArrayList<>();
 
-        List<Cops> allPlayersInRange = player.getNearbyEntities(20, 20, 20)
+        PlayerStar playerStar = PlayerStar.playerDataFromPlayer(player);
+        assert playerStar != null;
+        double star = playerStar.getStar();
+
+        int distance;
+        if (star <= 2) {
+            distance = 20;
+        } else if (star <= 4) {
+            distance = 50;
+        } else {
+            distance = 100;
+        }
+
+
+        List<Cops> allPlayersInRange = player.getNearbyEntities(distance, distance, distance)
                 .stream()
                 .filter(entity -> copsList.containsKey(entity.getUniqueId()))
                 .map(entity -> copsList.get(entity.getUniqueId()))
