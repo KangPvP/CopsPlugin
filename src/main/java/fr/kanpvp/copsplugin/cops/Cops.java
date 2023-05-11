@@ -123,7 +123,7 @@ public class Cops {
                 .collect(Collectors.toList());
 
         for (Cops cop : allPlayersInRange) {
-            if(cop.entityCop.getTarget() == player){
+            if(cop.target == player){
                 copsSeek.add(cop);
             }
         }

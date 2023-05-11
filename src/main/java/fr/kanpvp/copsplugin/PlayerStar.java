@@ -86,7 +86,7 @@ public class PlayerStar {
     public void endStar(){
         double star = this.star;
 
-        if(star < 5){
+        if(star < 5.5){
             this.setStar(star + 0.5);
         }
     }
@@ -94,7 +94,7 @@ public class PlayerStar {
     public void endStarCancel(){
         double star = this.star;
 
-        if(star < 5){
+        if(star > 1){
             this.setStar(star - 0.5);
         }
     }
@@ -126,7 +126,11 @@ public class PlayerStar {
                     }
 
                     if(star != 0 && star % 1 != 0){ //If star != 0 and star is .. .5
-                        if(playerStar.lastTimeChange + 10*1000 < System.currentTimeMillis()){ //If 10 de Star End
+                        if(playerStar.lastTimeChange + 30*1000 < System.currentTimeMillis()){ //If 10 de Star End
+                            for(Cops cop : Cops.cobsSeekPlayer(player)){
+                                cop.setTarget(null);
+                            }
+
                             playerStar.setStar(0);
                             player.sendMessage("Vous avez perdu vos étoiles");
                         }
