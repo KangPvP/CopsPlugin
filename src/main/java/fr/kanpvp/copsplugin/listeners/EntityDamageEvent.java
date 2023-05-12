@@ -1,10 +1,10 @@
 package fr.kanpvp.copsplugin.listeners;
 
+import fr.kanpvp.copsplugin.PlayerStar;
 import fr.kanpvp.copsplugin.cops.Cops;
 import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponDamageEntityEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,26 +17,27 @@ public class EntityDamageEvent implements Listener {
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
         if(damager instanceof Player){
-
-
             //Si l'entity is a Cops
-            if(Cops.copsList.containsKey(entity.getUniqueId())){
+            if(Cops.copsList.containsKey(entity.getUniqueId())){ //If entity is a COP
                 Cops cop = Cops.copsList.get(entity.getUniqueId());
                 if(cop.entityCop.isInvisible()){
                     event.setCancelled(true);
                 } else {
                     //Si le cop n'est pas occupé
-                    if(cop.entityCop.getTarget() == null){
+                    if(cop.entityCop.getTarget() == null){ //If player do a bad action, He will attac by cops
                         cop.setTarget((Player) damager);
+                        PlayerStar playerStar = PlayerStar.playerDataFromPlayer((Player) damager);
+                        assert playerStar != null;
+
+                        if(playerStar.getStar() == 0){
+                            playerStar.addStar();
+                        }
                     }
                 }
-
-
-
             }
 
             //Si un joueurs Frappe un autre joueur les cops Au alentour interviennent
-            if(entity instanceof Pig){
+            if(entity instanceof Player){
                 damager.sendMessage("Pig was hit");
 
                 //Si il y a des Cops a moins de 50 blocks du Joueurs
@@ -48,6 +49,13 @@ public class EntityDamageEvent implements Listener {
                         if(cop.entityCop.getTarget() == null){
                             cop.setTarget((Player) damager);
                             cop.entityCop.setTarget((LivingEntity) damager);
+
+                            PlayerStar playerStar = PlayerStar.playerDataFromPlayer((Player) damager);
+                            assert playerStar != null;
+
+                            if(playerStar.getStar() == 0){
+                                playerStar.addStar();
+                            }
                         }
                     }
                 }
@@ -69,7 +77,6 @@ public class EntityDamageEvent implements Listener {
                 }
             }
         }
-
 
         //Check if a cop Shoot an other cop
         if(Cops.copsList.containsKey(shooter.getUniqueId())){

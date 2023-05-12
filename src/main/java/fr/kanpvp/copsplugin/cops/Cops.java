@@ -173,96 +173,32 @@ public class Cops {
 
                     Creature entityCop = cop.entityCop;
 
-                    boolean playerInRange = false;
-
-
-                    List<Player> playersInRange1 = new ArrayList<>();
-                    List<Player> playersInRange2 = new ArrayList<>();
-                    List<Player> playersInRange3 = new ArrayList<>();
-
-                    List<Player> allPlayersInRange = entityCop.getNearbyEntities(100, 100, 100)
-                            .stream()
-                            .filter(entity -> entity instanceof Player)
-                            .map(entity -> (Player) entity)
-                            .distinct()
-                            .collect(Collectors.toList());
-
-                    for (Player player : allPlayersInRange) {
-                        double distance = player.getLocation().distance(entityCop.getLocation());
-                        if (distance <= 20) {
-                            playersInRange1.add(player);
-                        } else if (distance <= 50) {
-                            playersInRange2.add(player);
-                        } else {
-                            playersInRange3.add(player);
-                        }
-                    }
-
                     if(cop.target != null){
+                        boolean playerInRange = false;
                         Player player = cop.target;
-                        if(playersInRange1.contains(player)){
-                            entityCop.setTarget((LivingEntity) player);
+                        double distance = player.getLocation().distance(cop.entityCop.getLocation());
 
-                            if(cop.weaponTitle != null){
-                                if(CopsPlugin.getVectorCal().entityCanSee(entityCop, player)){ //If player is in front of the cop
-                                    WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, entityCop.getLocation().getDirection().normalize() );
-                                }
-                            }
-                            cop.setTimePassive(System.currentTimeMillis());
+                        if(distance < 20){
+                            shootIfPossible(entityCop, cop.weaponTitle, player);
                             playerInRange = true;
 
-                        }else if(playersInRange2.contains(cop.target)){
-                            if(PlayerStar.playerDataFromPlayer(player).getStar() > 2 ){
-                                entityCop.setTarget((LivingEntity) cop.target);
-
-                                if(cop.weaponTitle != null){
-                                    if(CopsPlugin.getVectorCal().entityCanSee(entityCop, cop.target)){ //If player is in front of the cop
-                                        WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entityCop.getLocation().getYaw(), entityCop.getLocation().getPitch()) );
-                                    }
-                                }
-                                cop.setTimePassive(System.currentTimeMillis());
+                        } else if(distance > 20 && distance < 50 && PlayerStar.playerDataFromPlayer(player).getStar() > 2) {
+                                shootIfPossible(entityCop, cop.weaponTitle, player);
                                 playerInRange = true;
-                            }
-                        }else if(playersInRange3.contains(cop.target)){
-                            if(PlayerStar.playerDataFromPlayer(player).getStar() > 4 ){
-                                entityCop.setTarget((LivingEntity) cop.target);
 
-                                if(cop.weaponTitle != null){
-                                    if(CopsPlugin.getVectorCal().entityCanSee(entityCop, cop.target)){ //If player is in front of the cop
-                                        WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entityCop.getLocation().getYaw(), entityCop.getLocation().getPitch()) );
-                                    }
-                                }
-                                cop.setTimePassive(System.currentTimeMillis());
+                        } else if(distance < 100 && PlayerStar.playerDataFromPlayer(player).getStar() > 4 ) {
+
                                 playerInRange = true;
-                            }
+
                         }
-                    }
 
-
-
-                    /*for(Entity entity : entityCop.getNearbyEntities(20,20,20)){ //ForEach Player
-                        if(entity instanceof Player){
-                            if(cop.target != null){
-                                if(entity.getUniqueId().equals(cop.target.getUniqueId())){
-                                    entityCop.setTarget((LivingEntity) entity);
-
-                                    if(cop.weaponTitle != null){
-                                        if(CopsPlugin.getVectorCal().entityCanSee(entityCop, entity)){ //If player is in front of the cop
-                                            //WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getVectorBetweenEntities(entityCop,entity));
-                                            WeaponMechanicsAPI.shoot(entityCop, cop.weaponTitle, CopsPlugin.getVectorCal().getLookDirection(entityCop.getLocation().getYaw(), entityCop.getLocation().getPitch()) );
-                                        }
-                                    }
-
-                                    cop.setTimePassive(System.currentTimeMillis());
-                                    playerInRange = true;
-                                }
+                        if(!playerInRange){ //If player is out set null
+                            if(entityCop.getTarget() != null){
+                                entityCop.setTarget(null);
+                                cop.setTimePassive(System.currentTimeMillis());
                             }
-                        }
-                    }*/
-
-                    if(!playerInRange){
-                        if(entityCop.getTarget() != null){
-                            entityCop.setTarget(null);
+                        } else {
+                            entityCop.setTarget((LivingEntity) cop.target);
                             cop.setTimePassive(System.currentTimeMillis());
                         }
                     }
@@ -279,6 +215,14 @@ public class Cops {
 
             }
         }.runTaskTimer(CopsPlugin.getInstance(), 40, 10);
+    }
+
+    public static void shootIfPossible(LivingEntity shooter, String weaponTitle, Player target) {
+
+        if(weaponTitle != null && CopsPlugin.getVectorCal().entityCanSee(shooter, target)){ //If player is in front of the cop
+            WeaponMechanicsAPI.shoot(shooter, weaponTitle, shooter.getLocation().getDirection().normalize() );
+        }
+
     }
 
 

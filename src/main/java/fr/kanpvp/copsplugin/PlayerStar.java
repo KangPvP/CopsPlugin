@@ -76,7 +76,9 @@ public class PlayerStar {
 
         if(star < 5.5){
             if(star % 1 == 0){
-                this.setStar(star + 1.0);
+                if(star != 5){
+                    this.setStar(star + 1.0);
+                }
             } else {
                 this.setStar(star + 0.5);
             }
@@ -114,8 +116,6 @@ public class PlayerStar {
                             if(recherche.size() == 0){ //If player n'est plus recherché
                                 playerStar.endStar();
 
-                                //Changé le titre le la boss Bar
-                                //Changé de boss bar
                             }
 
                         } else {  //Star end

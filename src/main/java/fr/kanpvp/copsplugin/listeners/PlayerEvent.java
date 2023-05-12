@@ -25,8 +25,6 @@ public class PlayerEvent implements Listener {
         BossBar bar = Bukkit.createBossBar("star0", BarColor.BLUE, BarStyle.SOLID);
         bar.addPlayer(player);
         Bar.dataPlayerBar.put(player, bar);
-
-
     }
 
     @EventHandler
