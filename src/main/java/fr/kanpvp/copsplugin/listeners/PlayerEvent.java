@@ -22,7 +22,7 @@ public class PlayerEvent implements Listener {
             new PlayerStar(player);
         }
 
-        BossBar bar = Bukkit.createBossBar("star0", BarColor.BLUE, BarStyle.SOLID);
+        BossBar bar = Bukkit.createBossBar(" ", BarColor.YELLOW, BarStyle.SOLID);
         bar.addPlayer(player);
         Bar.dataPlayerBar.put(player, bar);
     }
@@ -32,6 +32,7 @@ public class PlayerEvent implements Listener {
         Player player = event.getPlayer();
 
         PlayerStar.pDataList.remove(player.getUniqueId());
+        //Bar.dataPlayerBar.remove(player);
 
     }
 

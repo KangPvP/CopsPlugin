@@ -1,14 +1,22 @@
 package fr.kanpvp.copsplugin.utlis.randomdraw;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
 import java.util.Random;
 
 public class ManagerDraw {
-    EventLoot[] eventsA = {
-            new EventLoot("Event 1", null, 5),
-            new EventLoot("Event 2", null, 75),
-            new EventLoot("Event 3", null, 20)
+    public static EventLoot[] type1Loot = {
+            new EventLoot(itemGui(Material.REDSTONE, "SANG", null), 5),
+            new EventLoot(null, 75),
+            new EventLoot(null, 20)
+    };
+    public static EventLoot[] type2Loot = {
+            new EventLoot(null, 5),
+            new EventLoot(null, 75),
+            new EventLoot(null, 20)
     };
 
     private final Random random;
@@ -37,5 +45,31 @@ public class ManagerDraw {
         }
         return null;
     }
+
+
+
+    public static ItemStack itemGui(Material material, String name, List<String> lore) {
+        ItemStack item = new ItemStack(material, 1);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            meta.setLore(lore);
+        }
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static ItemStack itemGui(Material material, String name, List<String> lore, int amount) {
+        ItemStack item = new ItemStack(material, amount);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            meta.setLore(lore);
+        }
+        item.setItemMeta(meta);
+        return item;
+    }
+
+
 
 }

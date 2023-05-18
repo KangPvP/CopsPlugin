@@ -4,18 +4,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class EventLoot {
 
-    private String name;
     private ItemStack item;
     private double probability;
 
-    public EventLoot(String name, ItemStack item, double probability) {
-        this.name = name;
+    public EventLoot(ItemStack item, double probability) {
         this.item = item;
         this.probability = probability;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public ItemStack getItem() {
@@ -25,6 +19,8 @@ public class EventLoot {
     public double getProbability() {
         return probability;
     }
+
+
 
 
 }

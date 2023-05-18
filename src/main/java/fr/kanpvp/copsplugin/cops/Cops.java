@@ -3,6 +3,8 @@ package fr.kanpvp.copsplugin.cops;
 
 import fr.kanpvp.copsplugin.CopsPlugin;
 import fr.kanpvp.copsplugin.PlayerStar;
+import fr.kanpvp.copsplugin.utlis.randomdraw.EventLoot;
+import fr.kanpvp.copsplugin.utlis.randomdraw.ManagerDraw;
 import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,15 +25,14 @@ public class Cops {
     private static final Map<Integer, List<List<CopsRole>>> copsGroups = Cops.createCopsGroup();
     private static final HashMap<Integer, String> weaponsData = Cops.createWeaponsData();
 
-
     public static HashMap<UUID, Cops> copsList = new HashMap<>();
 
     public ArrayList<Cops> listCops = new ArrayList<>();
     public UUID idSection;
     public String name;
     public EntityType entityType;
+    public CopsRole copsRole;
     public HashMap<String, ItemStack> equipement;
-
     public String weaponTitle;
     public Creature entityCop;
     public Player target;
@@ -39,6 +40,7 @@ public class Cops {
 
     public Cops(CopsRole copRole, Player target, UUID idSection, Location loc){
         this.idSection = idSection;
+        this.copsRole = copRole;
         this.name = copRole.nameRole;
         this.entityType = copRole.creatureType;
         this.equipement = copRole.equipement;
@@ -260,22 +262,24 @@ public class Cops {
     public enum CopsRole {
         //Display Name, EntityType, Equipement, Rangs, SpawnDistance
 
-        SWATT("Swatt", EntityType.ZOMBIE, equipementCops("SWATT")),
-        GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME")),
-        BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER")),
-        CAPORAL("Swatt", EntityType.ZOMBIE, equipementCops("CAPORAL")),
-        SOLDAT("Swatt", EntityType.ZOMBIE, equipementCops("SOLDAT"));
+        SWATT("Swatt", EntityType.ZOMBIE, equipementCops("SWATT"), ManagerDraw.type1Loot),
+        GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME"), ManagerDraw.type1Loot),
+        BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER"), ManagerDraw.type1Loot),
+        CAPORAL("Swatt", EntityType.ZOMBIE, equipementCops("CAPORAL"), ManagerDraw.type1Loot),
+        SOLDAT("Swatt", EntityType.ZOMBIE, equipementCops("SOLDAT"), ManagerDraw.type1Loot);
 
         private final String nameRole;
         private final EntityType creatureType;
         private final HashMap<String, ItemStack> equipement;
+        public final EventLoot[] loots;
 
         private String weaponTile;
 
-        CopsRole(String displayName, EntityType type, HashMap<String, ItemStack> equipement){
+        CopsRole(String displayName, EntityType type, HashMap<String, ItemStack> equipement, EventLoot[] eventsA){
             this.nameRole = displayName;
             this.creatureType = type;
             this.equipement = equipement;
+            this.loots = eventsA;
         }
 
         private static HashMap<String, ItemStack> equipementCops(String name){
@@ -367,6 +371,10 @@ public class Cops {
         int randomIndex = new Random().nextInt(groups.size());
         return groups.get(randomIndex);
     }
+
+
+
+
 
 }
 

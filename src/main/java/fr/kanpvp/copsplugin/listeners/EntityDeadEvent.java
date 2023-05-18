@@ -68,7 +68,12 @@ public class EntityDeadEvent implements Listener {
         Player killer = entity.getKiller();
 
         if(Cops.copsList.containsKey(entity.getUniqueId())){
-            Cops.copsList.remove(entity.getUniqueId());
+            event.setDroppedExp(0);
+            event.getDrops().clear();
+
+            Cops cop = Cops.copsList.get(entity.getUniqueId());
+            ItemStack itemLoot = new ManagerDraw().getRandomItem(cop.copsRole.loots);
+            entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
 
             if(killer != null && killer instanceof Player){
                 boolean stats = new ManagerDraw().getRandomBoolean(30);
@@ -82,8 +87,7 @@ public class EntityDeadEvent implements Listener {
                     spawnCopsSection(killer, entity.getLocation());
                 }
             }
-
-
+            Cops.copsList.remove(entity.getUniqueId());
         }
     }
 
