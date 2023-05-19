@@ -72,8 +72,8 @@ public class EntityDeadEvent implements Listener {
             event.getDrops().clear();
 
             Cops cop = Cops.copsList.get(entity.getUniqueId());
-            ItemStack itemLoot = new ManagerDraw().getRandomItem(cop.copsRole.loots);
-            entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
+            //ItemStack itemLoot = new ManagerDraw().getRandomItem(cop.copsRole.loots);
+            //entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
 
             if(killer != null && killer instanceof Player){
                 boolean stats = new ManagerDraw().getRandomBoolean(30);
@@ -88,6 +88,9 @@ public class EntityDeadEvent implements Listener {
                 }
             }
             Cops.copsList.remove(entity.getUniqueId());
+            System.out.println("Un cop est mort");
+
+
         }
     }
 
@@ -100,7 +103,7 @@ public class EntityDeadEvent implements Listener {
 
 
 
-        for(Cops.CopsRole role : Cops.selectCopsGroup(1)){
+        for(Cops.CopsRole role : Cops.selectCopsGroup(1) ){
             Cops cop = new Cops(role, target, idSection, loc); //Spawn Cops
             cop.entityCop.setInvisible(true);
             cop.entityCop.setGlowing(true);

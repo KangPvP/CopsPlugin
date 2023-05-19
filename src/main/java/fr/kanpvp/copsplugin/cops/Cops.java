@@ -288,12 +288,17 @@ public class Cops {
 
             if(name.equalsIgnoreCase("SWATT")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
-                equipement.put("item", itemCreate(Material.FEATHER, 121)); //Ak47
+                equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40016)); //Ak47
 
             } else if(name.equalsIgnoreCase("GENDARME")){
+
+               /* ItemStack items = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) items.getItemMeta();
+                leatherArmorMeta.setColor(Color.fromBGR(10,50,100));*/
+
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
                 equipement.put("chestplate", itemCreate(Material.CHAINMAIL_CHESTPLATE, 0));
-                equipement.put("item", itemCreate(Material.FEATHER, 201)); //50_GS
+                equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40009)); //50_GS
 
             } else if(name.equalsIgnoreCase("BRIGADIER")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
@@ -339,11 +344,11 @@ public class Cops {
 
         List<List<CopsRole>> copsGroups0 = new ArrayList<>();
         copsGroups0.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT));
-        copsGroups0.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT));
+        copsGroups0.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.GENDARME));
         copsGroups.put(0, copsGroups0);
 
         List<List<CopsRole>> copsGroups1 = new ArrayList<>();
-        copsGroups1.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT));
+        copsGroups1.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT, CopsRole.GENDARME));
         copsGroups1.add(Arrays.asList(CopsRole.SWATT, CopsRole.SWATT, CopsRole.SWATT));
         copsGroups.put(1, copsGroups1);
 
@@ -358,8 +363,8 @@ public class Cops {
     public static HashMap<Integer, String> createWeaponsData(){
         HashMap<Integer, String> weapons = new HashMap<Integer, String>();
 
-        weapons.put(121, "AK_47");
-        weapons.put(201, "50_GS");
+        weapons.put(40016, "military_rifle");
+        weapons.put(40009, "pistol_mk_2");
 
         return weapons;
     }

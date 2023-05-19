@@ -128,21 +128,21 @@ public class Bar {
         HashMap<String, String> barNameMap = new HashMap<>();
 
         barNameMap.put(" ", "star0.0");
-        barNameMap.put("aꑕꑕꑕꑕꑕ", "star1.0");
-        barNameMap.put("bꑕꑕꑕꑕꑕ", "star1.4");
-        barNameMap.put("bꑕꑕꑕꑕꑕ ", "star1.5");
-        barNameMap.put("ccꑕꑕꑕꑕ", "star2.0");
-        barNameMap.put("ddꑕꑕꑕꑕ", "star2.4");
-        barNameMap.put("ddꑕꑕꑕꑕ ", "star2.5");
-        barNameMap.put("e", "star3.0");
-        barNameMap.put("f", "star3.4");
-        barNameMap.put("fh", "star3.5");
-        barNameMap.put("g", "star4.0");
-        barNameMap.put("h", "star4.4");
-        barNameMap.put("hh", "star4.5");
-        barNameMap.put("i", "star5.0");
-        barNameMap.put("j", "star5.4");
-        barNameMap.put("jh", "star5.5");
+        barNameMap.put("ꑖꑛꑕꑕꑕ", "star1.0");
+        barNameMap.put("ꑛꑕꑕꑕꑕ", "star1.4");
+        barNameMap.put("ꑖꑕꑕꑕꑕ", "star1.5");
+        barNameMap.put("ꑖꑖꑕꑕꑕ", "star2.0");
+        barNameMap.put("ꑛꑛꑕꑕꑕ", "star2.4");
+        barNameMap.put("ꑖꑖꑛꑕꑕ", "star2.5");
+        barNameMap.put("ꑖꑖꑖꑕꑕ", "star3.0");
+        barNameMap.put("ꑛꑛꑛꑕꑕ", "star3.4");
+        barNameMap.put("ꑖꑖꑖꑛꑕ", "star3.5");
+        barNameMap.put("ꑖꑖꑖꑖꑕ", "star4.0");
+        barNameMap.put("ꑛꑛꑛꑛꑕ", "star4.4");
+        barNameMap.put("ꑖꑖꑖꑖꑛ", "star4.5");
+        barNameMap.put("ꑖꑖꑖꑖꑖ", "star5.0");
+        barNameMap.put("ꑛꑛꑛꑛꑛ", "star5.4");
+        barNameMap.put(" ꑖꑖꑖꑖꑖ ", "star5.5");
 
         return barNameMap;
     }
