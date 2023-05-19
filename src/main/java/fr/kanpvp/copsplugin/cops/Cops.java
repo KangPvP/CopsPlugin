@@ -85,6 +85,7 @@ public class Cops {
         creature.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300*20, 2, false, false));
 
         creature.setCanPickupItems(false);
+        creature.setRemoveWhenFarAway(false);
 
         if(creature.getVehicle() != null){
             creature.getVehicle().remove();
@@ -122,9 +123,9 @@ public class Cops {
         double star = playerStar.getStar();
 
         int distance;
-        if (star <= 2) {
+        if (star <= 2.6) {
             distance = 20;
-        } else if (star <= 4) {
+        } else if (star <= 4.6) {
             distance = 50;
         } else {
             distance = 100;
@@ -175,7 +176,7 @@ public class Cops {
 
                     Creature entityCop = cop.entityCop;
 
-                    if(cop.target != null){
+                    if(cop.target != null && cop.target.isOnline()){
                         boolean playerInRange = false;
                         Player player = cop.target;
                         double distance = player.getLocation().distance(cop.entityCop.getLocation());
@@ -184,11 +185,11 @@ public class Cops {
                             shootIfPossible(entityCop, cop.weaponTitle, player);
                             playerInRange = true;
 
-                        } else if(distance > 20 && distance < 50 && PlayerStar.playerDataFromPlayer(player).getStar() > 2) {
+                        } else if(distance > 20 && distance < 50 && PlayerStar.playerDataFromPlayer(player).getStar() > 2.6) {
                                 shootIfPossible(entityCop, cop.weaponTitle, player);
                                 playerInRange = true;
 
-                        } else if(distance < 100 && PlayerStar.playerDataFromPlayer(player).getStar() > 4 ) {
+                        } else if(distance < 100 && PlayerStar.playerDataFromPlayer(player).getStar() > 4.6 ) {
 
                                 playerInRange = true;
 

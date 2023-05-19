@@ -55,15 +55,14 @@ public class Bar {
                     System.out.println(star);
 
                     String barName = referenceBar.get(bar.getTitle());
-                    if(barName.equals(null)){
-                        bar.getTitle();
-                    }
-                    boolean endsWithPoint4 = barName.endsWith(".4");
+                    System.out.println(bar.getTitle());
+                    System.out.println(barName);
 
-                    if(star != 0){   //If player is recherché
+
+                      //If player is recherché
                         if(star % 1 != 0){  // ! Star Full
 
-                            if(endsWithPoint4){ //if star finish by .4
+                            if(bar.getTitle().equals("ꑕꑕꑕꑕꑕ")){
                                 String starTitle = " ";
 
                                 for (Map.Entry<String, String> entry : referenceBar.entrySet()) {
@@ -73,12 +72,15 @@ public class Bar {
                                 }
 
                                 bar.setTitle(starTitle);
-                            } else { //if star finish by .5
-
+                            } else {
+                                bar.setTitle("ꑕꑕꑕꑕꑕ");
+                            }
+                        } else {
+                            if(!barName.equals("star" + star)){
                                 String starTitle = " ";
 
                                 for (Map.Entry<String, String> entry : referenceBar.entrySet()) {
-                                    if (entry.getValue().equals("star" + (star - 0.1) )) {
+                                    if (entry.getValue().equals("star" + star)) {
                                         starTitle = entry.getKey();
                                     }
                                 }
@@ -86,47 +88,14 @@ public class Bar {
                                 bar.setTitle(starTitle);
                             }
                         }
-                    }
-
-                    if(!endsWithPoint4){ //if star OFF don't change
-                        if(!barName.equals("star" + star)){
-                            String starTitle = " ";
-
-                            for (Map.Entry<String, String> entry : referenceBar.entrySet()) {
-                                if (entry.getValue().equals("star" + star)) {
-                                    starTitle = entry.getKey();
-                                }
-                            }
-
-                            bar.setTitle(starTitle);
-                        }
-                    }
-
-                    //Rectification Bug
-                    if(star == 0){
-                        if(!barName.equals("star" + star)){
-                            String starTitle = " ";
-
-                            for (Map.Entry<String, String> entry : referenceBar.entrySet()) {
-                                if (entry.getValue().equals("star" + star)) {
-                                    starTitle = entry.getKey();
-                                }
-                            }
-
-                            bar.setTitle(starTitle);
-                        }
-                    }
-
-
-
                 }
             }
-        }.runTaskTimer(CopsPlugin.getInstance(), 40, 20);
+        }.runTaskTimer(CopsPlugin.getInstance(), 40, 15);
     }
 
     public HashMap<String, String> referenceBar(){
         HashMap<String, String> barNameMap = new HashMap<>();
-
+        barNameMap.put("ꑕꑕꑕꑕꑕ", "star6.0");
         barNameMap.put(" ", "star0.0");
         barNameMap.put("ꑖꑛꑕꑕꑕ", "star1.0");
         barNameMap.put("ꑛꑕꑕꑕꑕ", "star1.4");
