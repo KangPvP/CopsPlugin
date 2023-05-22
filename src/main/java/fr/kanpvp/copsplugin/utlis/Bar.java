@@ -51,13 +51,7 @@ public class Bar {
                     PlayerStar playerStar = PlayerStar.playerDataFromPlayer(player);
                     assert playerStar != null;
                     double star = playerStar.getStar();
-
-                    System.out.println(star);
-
                     String barName = referenceBar.get(bar.getTitle());
-                    System.out.println(bar.getTitle());
-                    System.out.println(barName);
-
 
                       //If player is recherché
                         if(star % 1 != 0){  // ! Star Full
