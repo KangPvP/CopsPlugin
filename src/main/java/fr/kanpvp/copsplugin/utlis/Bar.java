@@ -54,7 +54,7 @@ public class Bar {
                     String barName = referenceBar.get(bar.getTitle());
 
                       //If player is recherché
-                        if(star % 1 != 0){  // ! Star Full
+                        if(star % 1 != 0){  // ! Star  Full
 
                             if(bar.getTitle().equals("ꑕꑕꑕꑕꑕ")){
                                 String starTitle = " ";
