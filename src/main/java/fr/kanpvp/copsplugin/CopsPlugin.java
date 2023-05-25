@@ -1,5 +1,6 @@
 package fr.kanpvp.copsplugin;
 
+import fr.kanpvp.copsplugin.commands.CmdOffCop;
 import fr.kanpvp.copsplugin.cops.Cops;
 import fr.kanpvp.copsplugin.listeners.EntityCopsEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDamageEvent;
@@ -24,6 +25,8 @@ public final class CopsPlugin extends JavaPlugin {
         new Bar();
 
         System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is on Enables");
+
+        Bukkit.getPluginCommand("offcop").setExecutor(new CmdOffCop());
 
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityCopsEvent(), this);
