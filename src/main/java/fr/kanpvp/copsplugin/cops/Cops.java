@@ -131,7 +131,6 @@ public class Cops {
             distance = 100;
         }
 
-
         List<Cops> allPlayersInRange = player.getNearbyEntities(distance, distance, distance)
                 .stream()
                 .filter(entity -> copsList.containsKey(entity.getUniqueId()))
