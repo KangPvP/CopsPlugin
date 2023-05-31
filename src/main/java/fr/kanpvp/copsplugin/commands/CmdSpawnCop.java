@@ -1,5 +1,6 @@
 package fr.kanpvp.copsplugin.commands;
 
+import fr.kanpvp.copsplugin.cops.Cops;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -20,13 +21,24 @@ public class CmdSpawnCop implements CommandExecutor {
             int type = tryIntParse(args[4]);
 
             if(world != null && x != -1.234 && y != -1.234 && z != -1.234 && type != -1){
-                Location loc = new Location(world, x,y,z);
-
-                for(Player player : Bukkit.getOnlinePlayers()){
-
+                if(Integer.parseInt(args[1]) < 1 || Integer.parseInt(args[1]) > 5){
+                    return false;
                 }
 
-                //spawnCopsSection(killer, loc);
+                Location loc = new Location(world, x,y,z);
+
+                Player playerSelect = null;
+                double minDistance = Double.MAX_VALUE;
+
+                for(Player player1 : Bukkit.getOnlinePlayers()){
+                    if(loc.distance(player1.getLocation()) < minDistance){
+                        playerSelect = player1;
+                    }
+                }
+
+                if(playerSelect != null){
+                    Cops.spawnCopsSection(playerSelect, loc, type);
+                }
 
 
             }

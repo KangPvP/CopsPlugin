@@ -9,6 +9,7 @@ import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +18,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -100,6 +102,64 @@ public class Cops {
         return (Creature) creature;
     }
 
+    public static void spawnCopsSection(Player target, Location loc){
+        UUID idSection = UUID.randomUUID();
+
+        PlayerStar playerStar = PlayerStar.playerDataFromPlayer(target);
+        assert playerStar != null;
+        int star =  Integer.parseInt(String.valueOf(String.valueOf(PlayerStar.playerDataFromPlayer(target).getStar()).charAt(0)));
+
+        for(Cops.CopsRole role : Cops.selectCopsGroup(star) ){
+            Cops cop = new Cops(role, target, idSection, loc); //Spawn Cops
+            cop.entityCop.setInvisible(true);
+            cop.entityCop.setGlowing(true);
+
+            Vector ejectVec = getLookDirection(target);
+            cop.entityCop.setVelocity(ejectVec.multiply(3 + new Random().nextInt(1))); //Ejection
+        }
+
+        Bukkit.getScheduler().runTaskLater(CopsPlugin.getInstance(), new Runnable(){
+            final UUID section = idSection;
+            @Override
+            public void run() {
+                Location loc = new Location(Bukkit.getWorld("world"), 0,0,0);
+                for(Cops cop : Cops.getCopsSection(section)){
+                    cop.entityCop.setInvisible(false);
+                    cop.entityCop.setTarget(cop.target);
+
+                    Cops.entityEquipement(cop.entityCop, cop.equipement);
+
+                    loc = cop.entityCop.getLocation();
+                }
+                Bukkit.getWorld("world").playSound(loc, Sound.ITEM_TOTEM_USE, 1F, 1F);
+            }
+        }, 20);
+    }
+
+    public static void spawnCopsSection(Player target, Location loc, int type){
+        UUID idSection = UUID.randomUUID();
+
+        /*PlayerStar playerStar = PlayerStar.playerDataFromPlayer(target);
+        assert playerStar != null;
+        playerStar.addStar();*/
+
+        for(Cops.CopsRole role : Cops.selectCopsGroup(type) ){
+            Cops cop = new Cops(role, target, idSection, loc); //Spawn Cops
+            cop.entityCop.setTarget(cop.target);
+            Cops.entityEquipement(cop.entityCop, cop.equipement);
+        }
+
+    }
+
+    public static org.bukkit.util.Vector getLookDirection(Player player) {
+        double yaw = Math.toRadians(player.getLocation().getYaw() + (new Random().nextDouble() + (-5)) );
+
+        double x = -Math.sin(yaw);
+        double z = Math.cos(yaw);
+
+        return new org.bukkit.util.Vector(x, 0,z).normalize();
+    }
+
 
     public static ArrayList<Cops> cobsSeekPlayer(Player player){
         ArrayList<Cops> copsSeek = new ArrayList<>();
@@ -179,6 +239,12 @@ public class Cops {
                         boolean playerInRange = false;
                         Player player = cop.target;
                         double distance = player.getLocation().distance(cop.entityCop.getLocation());
+
+                        PlayerStar playerStar = PlayerStar.playerDataFromPlayer(player);
+
+                        if(playerStar != null && playerStar.getStar() == 0){
+                            playerStar.addStar();
+                        }
 
                         if(distance < 20){
                             shootIfPossible(entityCop, cop.weaponTitle, player);
