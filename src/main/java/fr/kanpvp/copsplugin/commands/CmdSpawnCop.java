@@ -47,7 +47,7 @@ public class CmdSpawnCop implements CommandExecutor {
 
 
         } else {
-            System.out.println("/copsspawnset [world] [x] [y] [z] [type 1]");
+            System.out.println("/copsspawnset [world] [x] [y] [z] [type 1] ");
         }
         return false;
     }
