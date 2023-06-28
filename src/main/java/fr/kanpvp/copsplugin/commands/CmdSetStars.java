@@ -15,6 +15,10 @@ public class CmdSetStars implements CommandExecutor {
         if(args.length == 2){
             Player target = Bukkit.getPlayer(args[0]);
 
+            if(!sender.hasPermission("perm.copset")){
+                return false;
+            }
+
             if(target == null){
                 return false;
             }

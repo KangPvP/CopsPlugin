@@ -70,7 +70,6 @@ public class EntityDeadEvent implements Listener {
             if(killer != null && killer instanceof Player){
                 boolean stats = new ManagerDraw().getRandomBoolean(30);
                 if(stats){
-
                     //Star + 1
                     PlayerStar.playerDataFromPlayer(killer).addStar();
                     killer.sendMessage("Vous avez " + PlayerStar.playerDataFromPlayer(killer).getStar());

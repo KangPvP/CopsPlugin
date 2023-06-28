@@ -14,6 +14,10 @@ public class CmdSpawnCop implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(args.length == 5){
+            if(!sender.hasPermission("perm.copspawnset")){
+                return false;
+            }
+
             World world = Bukkit.getWorld(args[0]);
             double x = tryDoubleParse(args[1]);
             double y = tryDoubleParse(args[2]);
@@ -21,7 +25,7 @@ public class CmdSpawnCop implements CommandExecutor {
             int type = tryIntParse(args[4]);
 
             if(world != null && x != -1.234 && y != -1.234 && z != -1.234 && type != -1){
-                if(Integer.parseInt(args[1]) < 1 || Integer.parseInt(args[1]) > 5){
+                if(Integer.parseInt(args[1]) < 1 || Integer.parseInt(args[1]) > 5) {
                     return false;
                 }
 
@@ -43,11 +47,8 @@ public class CmdSpawnCop implements CommandExecutor {
 
             }
 
-
-
-
         } else {
-            System.out.println("/copsspawnset [world] [x] [y] [z] [type 1] ");
+            System.out.println("/copspawnset [world] [x] [y] [z] [type 1]");
         }
         return false;
     }
