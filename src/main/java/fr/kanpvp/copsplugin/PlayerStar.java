@@ -13,7 +13,6 @@ public class PlayerStar {
     public static HashMap<UUID, PlayerStar> pDataList = new HashMap<>();
     public Player player;
     public double star;
-
     public Long lastTimeChange;
 
     public PlayerStar(Player player){
@@ -36,7 +35,7 @@ public class PlayerStar {
 
 
     public static PlayerStar playerDataFromPlayer(Player player){
-        if( pDataList.containsKey(player.getUniqueId()) ){
+        if( pDataList.containsKey( player.getUniqueId()) ){
             return pDataList.get(player.getUniqueId());
         }
         return null;

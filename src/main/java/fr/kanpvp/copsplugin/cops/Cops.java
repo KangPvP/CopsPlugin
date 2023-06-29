@@ -354,7 +354,7 @@ public class Cops {
 
             if(name.equalsIgnoreCase("SWATT")){
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
-                equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40016)); //Ak47
+                equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40009)); //Ak47
 
             } else if(name.equalsIgnoreCase("GENDARME")){
 

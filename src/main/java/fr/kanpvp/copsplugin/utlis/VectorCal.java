@@ -4,19 +4,6 @@ import org.bukkit.entity.Entity;
 
 public class VectorCal {
 
-    public org.bukkit.util.Vector getLookDirection(float yaw, float pitch) {
-        // Convert the Yaw and Pitch from degrees to radians
-        double yawRadians = Math.toRadians(yaw);
-        double pitchRadians = Math.toRadians(pitch);
-
-        // Calculate the X, Y and Z components of the direction vector using trigonometric functions
-        double x = -Math.sin(yawRadians) * Math.cos(pitchRadians);
-        double y = Math.sin(pitchRadians);
-        double z = Math.cos(yawRadians) * Math.cos(pitchRadians);
-
-        return new org.bukkit.util.Vector(x,y,z);
-    }
-
     public boolean entityCanSee(Entity entity1, Entity entity2) {
         org.bukkit.util.Vector vector1 = getVectorBetweenEntities(entity1, entity2);
         org.bukkit.util.Vector vector2 = entity1.getLocation().getDirection().normalize();

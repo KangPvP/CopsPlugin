@@ -28,7 +28,7 @@ public final class CopsPlugin extends JavaPlugin {
 
         Bukkit.getPluginCommand("offcop").setExecutor(new CmdOffCop());
 
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerEvent(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerEvent(), CopsPlugin.getInstance());
         Bukkit.getServer().getPluginManager().registerEvents(new EntityCopsEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDeadEvent(), this);
