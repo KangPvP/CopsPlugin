@@ -2,3 +2,5 @@ name: CopsPlugin
 version: '1.0-SNAPSHOT'
 main: fr.kanpvp.copsplugin.CopsPlugin
 api-version: 1.19
+commands:
+  offcop:
