@@ -12,12 +12,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class PlayerEvent implements Listener {
+public class PlayerEventJ implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
         System.out.println("test Join");
+
         if(!PlayerStar.pDataList.containsKey(player.getUniqueId())){
             System.out.println("test player");
 

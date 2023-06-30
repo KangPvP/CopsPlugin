@@ -5,7 +5,7 @@ import fr.kanpvp.copsplugin.cops.Cops;
 import fr.kanpvp.copsplugin.listeners.EntityCopsEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDamageEvent;
 import fr.kanpvp.copsplugin.listeners.EntityDeadEvent;
-import fr.kanpvp.copsplugin.listeners.PlayerEvent;
+import fr.kanpvp.copsplugin.listeners.PlayerEventJ;
 import fr.kanpvp.copsplugin.utlis.Bar;
 import fr.kanpvp.copsplugin.utlis.VectorCal;
 import org.bukkit.Bukkit;
@@ -28,7 +28,7 @@ public final class CopsPlugin extends JavaPlugin {
 
         Bukkit.getPluginCommand("offcop").setExecutor(new CmdOffCop());
 
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerEvent(), CopsPlugin.getInstance());
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerEventJ(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityCopsEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDeadEvent(), this);
