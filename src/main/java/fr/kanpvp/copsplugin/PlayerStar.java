@@ -138,9 +138,4 @@ public class PlayerStar {
             }
         }.runTaskTimer(CopsPlugin.getInstance(), 40, 20);
     }
-
-
-
-
-
 }

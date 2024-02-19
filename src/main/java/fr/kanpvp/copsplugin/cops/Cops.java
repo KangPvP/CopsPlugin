@@ -6,14 +6,12 @@ import fr.kanpvp.copsplugin.PlayerStar;
 import fr.kanpvp.copsplugin.utlis.randomdraw.EventLoot;
 import fr.kanpvp.copsplugin.utlis.randomdraw.ManagerDraw;
 import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -352,26 +350,28 @@ public class Cops {
 
             HashMap<String, ItemStack> equipement = new HashMap<>();
 
-            if(name.equalsIgnoreCase("SWATT")){
+            if(name.equalsIgnoreCase("SWATT")){ //Cop Niveau 4
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
-                equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40009)); //Ak47
+                equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40016)); //Ak47
 
-            } else if(name.equalsIgnoreCase("GENDARME")){
+            } else if(name.equalsIgnoreCase("GENDARME")){  //Cop Niveau 3
 
-               /* ItemStack items = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
-                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) items.getItemMeta();
-                leatherArmorMeta.setColor(Color.fromBGR(10,50,100));*/
+                ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) chestplate.getItemMeta();
+                assert leatherArmorMeta != null;
+                leatherArmorMeta.setColor(Color.fromRGB(3,252,136));
+                chestplate.setItemMeta(leatherArmorMeta);
 
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
-                equipement.put("chestplate", itemCreate(Material.CHAINMAIL_CHESTPLATE, 0));
+                equipement.put("chestplate", chestplate);
                 equipement.put("item", itemCreate(Material.LEATHER_HORSE_ARMOR, 40009)); //50_GS
 
-            } else if(name.equalsIgnoreCase("BRIGADIER")){
+            } else if(name.equalsIgnoreCase("BRIGADIER")){ //Cop Niveau 2
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
                 equipement.put("chestplate", itemCreate(Material.GOLDEN_CHESTPLATE, 1));
                 equipement.put("leggings", itemCreate(Material.LEATHER_LEGGINGS, 0));
 
-            } else if(name.equalsIgnoreCase("CAPORAL")){
+            } else if(name.equalsIgnoreCase("CAPORAL")){ //Cop Niveau 1
                 equipement.put("helmet", itemCreate(Material.IRON_HELMET, 0));
 
             } else if(name.equalsIgnoreCase("SOLDAT")){
@@ -379,6 +379,16 @@ public class Cops {
             }
 
             return equipement;
+        }
+
+        private static Color hexStrColorToColor(String hexCode){
+
+            int resultRed = Integer.valueOf(hexCode.substring(0, 2), 16);
+            int resultGreen = Integer.valueOf(hexCode.substring(2, 4), 16);
+            int resultBlue = Integer.valueOf(hexCode.substring(4, 6), 16);
+            Color color = Color.fromRGB(resultRed, resultGreen, resultBlue);
+
+            return color;
         }
 
         private String getWeaponTitle(){

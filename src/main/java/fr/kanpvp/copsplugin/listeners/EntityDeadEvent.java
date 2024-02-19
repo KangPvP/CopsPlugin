@@ -68,7 +68,7 @@ public class EntityDeadEvent implements Listener {
             //entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
 
             if(killer != null && killer instanceof Player){
-                boolean stats = new ManagerDraw().getRandomBoolean(30);
+                boolean stats = new ManagerDraw().getRandomBoolean(40);
                 if(stats){
                     //Star + 1
                     PlayerStar.playerDataFromPlayer(killer).addStar();
