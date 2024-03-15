@@ -59,14 +59,14 @@
             <artifactId>weaponmechanics</artifactId>
             <version>2.2.5</version>
             <scope>system</scope>
-            <systemPath>${basedir}/WeaponMechanics-2.2.6.jar</systemPath>
+            <systemPath>${basedir}/WeaponMechanics-3.2.10.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.deecaad</groupId>
             <artifactId>mechanicscore</artifactId>
             <version>2.2.4</version>
             <scope>system</scope>
-            <systemPath>${basedir}/MechanicsCore-2.2.4.jar</systemPath>
+            <systemPath>${basedir}/MechanicsCore-3.2.8.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

@@ -17,7 +17,8 @@ public class EntityCopsEvent implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event){
-        new Cops(Cops.CopsRole.SWATT, (Player) event.getPlayer(), UUID.randomUUID(), new Location(Bukkit.getWorld("world"),5,100,5));
+        new Cops(Cops.CopsRole.SWATT, (Player) event.getPlayer(), UUID.randomUUID(), new Location(Bukkit.getWorld("world"),5,150,5));
+
     }
 
     @EventHandler

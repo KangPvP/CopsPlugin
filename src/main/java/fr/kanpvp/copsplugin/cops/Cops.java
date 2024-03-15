@@ -72,8 +72,10 @@ public class Cops {
 
         Creature creature = (Creature) Bukkit.getWorld("world").spawnEntity(location, entityType);
 
+
         //creature.setCustomName(this.name);
         //creature.setCustomNameVisible(true);;
+
 
         EntityEquipment equip = creature.getEquipment();
 
@@ -81,7 +83,6 @@ public class Cops {
         equip.clear();
 
         creature.setMetadata("cops", new FixedMetadataValue(CopsPlugin.getInstance(), "cops"));
-
         creature.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300*20, 2, false, false));
 
         creature.setCanPickupItems(false);
@@ -89,6 +90,13 @@ public class Cops {
 
         if(creature.getVehicle() != null){
             creature.getVehicle().remove();
+        }
+
+        if(creature instanceof PiglinAbstract){
+            PiglinAbstract piglinCreature = (PiglinAbstract) creature;
+            piglinCreature.setImmuneToZombification(true);
+            piglinCreature.setAdult();
+            return (Creature) piglinCreature;
         }
 
         if(creature instanceof Zombie){
@@ -326,8 +334,8 @@ public class Cops {
     public enum CopsRole {
         //Display Name, EntityType, Equipement, Rangs, SpawnDistance
 
-        SWATT("Swatt", EntityType.ZOMBIE, equipementCops("SWATT"), ManagerDraw.type1Loot),
-        GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME"), ManagerDraw.type1Loot),
+        SWATT("Swatt", EntityType.PIGLIN, equipementCops("SWATT"), ManagerDraw.type1Loot),
+        GENDARME("Gendarme", EntityType.PIGLIN, equipementCops("GENDARME"), ManagerDraw.type1Loot),
         BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER"), ManagerDraw.type1Loot),
         CAPORAL("Swatt", EntityType.ZOMBIE, equipementCops("CAPORAL"), ManagerDraw.type1Loot),
         SOLDAT("Swatt", EntityType.ZOMBIE, equipementCops("SOLDAT"), ManagerDraw.type1Loot);
@@ -336,8 +344,6 @@ public class Cops {
         private final EntityType creatureType;
         private final HashMap<String, ItemStack> equipement;
         public final EventLoot[] loots;
-
-        private String weaponTile;
 
         CopsRole(String displayName, EntityType type, HashMap<String, ItemStack> equipement, EventLoot[] eventsA){
             this.nameRole = displayName;
@@ -445,18 +451,11 @@ public class Cops {
         return weapons;
     }
 
-
-
     public static List<CopsRole> selectCopsGroup(int stars) {
         List<List<CopsRole>> groups = copsGroups.getOrDefault(stars, copsGroups.get(0));
         int randomIndex = new Random().nextInt(groups.size());
         return groups.get(randomIndex);
     }
-
-
-
-
-
 }
 
 

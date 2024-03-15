@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,11 +40,8 @@ public class EntityDeadEvent implements Listener {
 
                 Cops.spawnCopsSection(killer, killer.getLocation());
             //}
-
-
         }
     }
-
 
     public org.bukkit.util.Vector getLookDirection(Player player) {
         double yaw = Math.toRadians(player.getLocation().getYaw() + (new Random().nextDouble() + (-5)) );
@@ -64,10 +62,12 @@ public class EntityDeadEvent implements Listener {
             event.getDrops().clear();
 
             Cops cop = Cops.copsList.get(entity.getUniqueId());
-            //ItemStack itemLoot = new ManagerDraw().getRandomItem(cop.copsRole.loots);
-            //entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
+            ArrayList<ItemStack> ListItemsLoot = (ArrayList<ItemStack>) new ManagerDraw().getRandomItems(cop.copsRole.loots);
+            for (ItemStack itemLoot : ListItemsLoot){
+                entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
+            }
 
-            if(killer != null && killer instanceof Player){
+            if(killer != null){
                 boolean stats = new ManagerDraw().getRandomBoolean(40);
                 if(stats){
                     //Star + 1

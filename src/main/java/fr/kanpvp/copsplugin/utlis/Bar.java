@@ -103,8 +103,8 @@ public class Bar {
         barNameMap.put("ꑖꑖꑖꑖꑕ", "star4.0");
         barNameMap.put("ꑛꑛꑛꑛꑕ", "star4.4");
         barNameMap.put("ꑖꑖꑖꑖꑛ", "star4.5");
-        barNameMap.put("ꑖꑖꑖꑖꑖ", "star5.0");
-        barNameMap.put("ꑛꑛꑛꑛꑛ", "star5.4");
+        barNameMap.put("ꑖꑖꑖꑖꑖ", "star5.0"); // Status de Base
+        barNameMap.put("ꑛꑛꑛꑛꑛ", "star5.4"); // Status
         barNameMap.put(" ꑖꑖꑖꑖꑖ ", "star5.5");
 
         return barNameMap;

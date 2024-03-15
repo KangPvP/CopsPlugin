@@ -1,16 +1,18 @@
 package fr.kanpvp.copsplugin.utlis.randomdraw;
 
+import me.deecaad.weaponmechanics.WeaponMechanicsAPI;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ManagerDraw {
     public static EventLoot[] type1Loot = {
             new EventLoot(itemGui(Material.REDSTONE, "SANG", null), 5),
-            new EventLoot(null, 75),
+            new EventLoot(itemGui(Material.LEATHER_HORSE_ARMOR, "ap_pistol_36", null), 75),
             new EventLoot(null, 20)
     };
     public static EventLoot[] type2Loot = {
@@ -46,7 +48,24 @@ public class ManagerDraw {
         return null;
     }
 
+    public List<ItemStack> getRandomItems(EventLoot[] events) {
+        List<ItemStack> listItems = new ArrayList<ItemStack>();
+        for (int i = 0; i < events.length; i++) {
+            double probability = events[i].getProbability();
+            if(this.getRandomBoolean((int) probability)){
+                if(events[i].getItem() != null){
+                    if(events[i].getItem().getType().equals(Material.LEATHER_HORSE_ARMOR)){  // Convert My Leather_Horse_Armor in Weapon
+                        String weaponName = events[i].getItem().getItemMeta().getDisplayName();
+                        listItems.add(WeaponMechanicsAPI.generateWeapon(weaponName));
+                    } else {
+                        listItems.add(events[i].getItem());
 
+                    }
+                }
+            }
+        }
+        return listItems;
+    }
 
     public static ItemStack itemGui(Material material, String name, List<String> lore) {
         ItemStack item = new ItemStack(material, 1);

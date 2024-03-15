@@ -10,10 +10,11 @@ import fr.kanpvp.copsplugin.utlis.Bar;
 import fr.kanpvp.copsplugin.utlis.VectorCal;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CopsPlugin extends JavaPlugin {
-
+    public FileConfiguration config = getConfig();
     public static CopsPlugin instance;
     public static VectorCal vectorCal;
 
@@ -21,8 +22,15 @@ public final class CopsPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         vectorCal = new VectorCal();
+
+        saveDefaultConfig();
+        config.addDefault("langue", true);
+        config.options().copyDefaults(true);
+        saveConfig();
+
         PlayerStar.starActus();
         new Bar();
+
 
         System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is on Enables");
 

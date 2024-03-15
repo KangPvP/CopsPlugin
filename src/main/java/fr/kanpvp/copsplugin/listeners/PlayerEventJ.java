@@ -17,10 +17,8 @@ public class PlayerEventJ implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
-        System.out.println("test Join");
 
         if(!PlayerStar.pDataList.containsKey(player.getUniqueId())){
-            System.out.println("test player");
 
             new PlayerStar(player);
         }

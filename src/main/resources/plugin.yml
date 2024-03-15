@@ -2,5 +2,6 @@ name: CopsPlugin
 version: '${project.version}'
 main: fr.kanpvp.copsplugin.CopsPlugin
 api-version: 1.19
+depend: [ WeaponMechanics ]
 commands:
   offcop:
