@@ -240,6 +240,7 @@ public class Cops {
                     Cops cop = entry.getValue();
 
                     Creature entityCop = cop.entityCop;
+                    System.out.println("test 1");
 
                     if(cop.target != null && cop.target.isOnline()){
                         boolean playerInRange = false;
@@ -255,6 +256,7 @@ public class Cops {
                         if(distance < 20){
                             shootIfPossible(entityCop, cop.weaponTitle, player);
                             playerInRange = true;
+                            System.out.println("test 2");
 
                         } else if(distance > 20 && distance < 50 && PlayerStar.playerDataFromPlayer(player).getStar() > 2.6) {
                                 shootIfPossible(entityCop, cop.weaponTitle, player);
@@ -272,7 +274,8 @@ public class Cops {
                                 cop.setTimePassive(System.currentTimeMillis());
                             }
                         } else {
-                            entityCop.setTarget((LivingEntity) cop.target);
+                            entityCop.setTarget((Player) cop.target);
+                            System.out.println("test 3 : " + cop.target);
                             cop.setTimePassive(System.currentTimeMillis());
                         }
                     }
@@ -335,7 +338,7 @@ public class Cops {
         //Display Name, EntityType, Equipement, Rangs, SpawnDistance
 
         SWATT("Swatt", EntityType.PIGLIN, equipementCops("SWATT"), ManagerDraw.type1Loot),
-        GENDARME("Gendarme", EntityType.PIGLIN, equipementCops("GENDARME"), ManagerDraw.type1Loot),
+        GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME"), ManagerDraw.type1Loot),
         BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER"), ManagerDraw.type1Loot),
         CAPORAL("Swatt", EntityType.ZOMBIE, equipementCops("CAPORAL"), ManagerDraw.type1Loot),
         SOLDAT("Swatt", EntityType.ZOMBIE, equipementCops("SOLDAT"), ManagerDraw.type1Loot);

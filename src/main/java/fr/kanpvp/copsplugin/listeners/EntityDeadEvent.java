@@ -49,7 +49,7 @@ public class EntityDeadEvent implements Listener {
         double x = -Math.sin(yaw);
         double z = Math.cos(yaw);
 
-        return new org.bukkit.util.Vector(x, 0,z).normalize();
+        return new org.bukkit.util.Vector(x, 0, z).normalize();
     }
 
     @EventHandler
@@ -64,7 +64,9 @@ public class EntityDeadEvent implements Listener {
             Cops cop = Cops.copsList.get(entity.getUniqueId());
             ArrayList<ItemStack> ListItemsLoot = (ArrayList<ItemStack>) new ManagerDraw().getRandomItems(cop.copsRole.loots);
             for (ItemStack itemLoot : ListItemsLoot){
-                entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
+                if(itemLoot != null){
+                    entity.getLocation().getWorld().dropItem(entity.getLocation(), itemLoot);
+                }
             }
 
             if(killer != null){
