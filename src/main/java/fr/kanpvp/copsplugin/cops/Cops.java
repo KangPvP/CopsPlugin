@@ -336,7 +336,6 @@ public class Cops {
 
     public enum CopsRole {
         //Display Name, EntityType, Equipement, Rangs, SpawnDistance
-
         SWATT("Swatt", EntityType.ZOMBIE, equipementCops("SWATT"), ManagerDraw.type1Loot),
         GENDARME("Gendarme", EntityType.ZOMBIE, equipementCops("GENDARME"), ManagerDraw.type1Loot),
         BRIGADIER("Swatt", EntityType.ZOMBIE, equipementCops("BRIGADIER"), ManagerDraw.type1Loot),
