@@ -125,7 +125,7 @@ public class PlayerStar {
                     }
 
                     if(star != 0 && star % 1 != 0){ //If star != 0 and star is .. .5
-                        if(playerStar.lastTimeChange + 15*1000 < System.currentTimeMillis()){ //If 10 de Star End
+                        if(playerStar.lastTimeChange + 15*1000 < System.currentTimeMillis()){ // Si après t minute les étoile
                             for(Cops cop : Cops.cobsSeekPlayer(player)){
                                 cop.setTarget(null);
                             }

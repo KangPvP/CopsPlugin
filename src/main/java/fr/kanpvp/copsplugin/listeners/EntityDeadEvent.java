@@ -29,7 +29,7 @@ public class EntityDeadEvent implements Listener {
             cop.entityCop.setTarget(null);
         }
 
-        //PlayerStar.playerDataFromPlayer(player).setStar(0); //Reset Star
+        PlayerStar.playerDataFromPlayer(player).setStar(0); //Reset Star
 
 
         //Spawn Section Cop

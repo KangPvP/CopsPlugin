@@ -92,13 +92,6 @@ public class Cops {
             creature.getVehicle().remove();
         }
 
-        if(creature instanceof PiglinAbstract){
-            PiglinAbstract piglinCreature = (PiglinAbstract) creature;
-            piglinCreature.setImmuneToZombification(true);
-            piglinCreature.setAdult();
-            return (Creature) piglinCreature;
-        }
-
         if(creature instanceof Zombie){
             Zombie zombie = (Zombie) creature;
             zombie.setAdult();
@@ -240,7 +233,6 @@ public class Cops {
                     Cops cop = entry.getValue();
 
                     Creature entityCop = cop.entityCop;
-                    System.out.println("test 1");
 
                     if(cop.target != null && cop.target.isOnline()){
                         boolean playerInRange = false;
@@ -256,16 +248,12 @@ public class Cops {
                         if(distance < 20){
                             shootIfPossible(entityCop, cop.weaponTitle, player);
                             playerInRange = true;
-                            System.out.println("test 2");
-
                         } else if(distance > 20 && distance < 50 && PlayerStar.playerDataFromPlayer(player).getStar() > 2.6) {
-                                shootIfPossible(entityCop, cop.weaponTitle, player);
-                                playerInRange = true;
+                            shootIfPossible(entityCop, cop.weaponTitle, player);
+                            playerInRange = true;
 
                         } else if(distance < 100 && PlayerStar.playerDataFromPlayer(player).getStar() > 4.6 ) {
-
-                                playerInRange = true;
-
+                            playerInRange = true;
                         }
 
                         if(!playerInRange){ //If player is out set null
@@ -275,7 +263,6 @@ public class Cops {
                             }
                         } else {
                             entityCop.setTarget((Player) cop.target);
-                            System.out.println("test 3 : " + cop.target);
                             cop.setTimePassive(System.currentTimeMillis());
                         }
                     }
