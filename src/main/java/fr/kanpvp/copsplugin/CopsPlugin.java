@@ -31,7 +31,6 @@ public final class CopsPlugin extends JavaPlugin {
         PlayerStar.starActus();
         new Bar();
 
-
         System.out.println(ChatColor.GREEN + "The plugin CopsPlugin is on Enables");
 
         Bukkit.getPluginCommand("offcop").setExecutor(new CmdOffCop());
