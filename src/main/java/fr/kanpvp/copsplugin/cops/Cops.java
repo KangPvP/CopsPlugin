@@ -72,11 +72,8 @@ public class Cops {
 
         Creature creature = (Creature) Bukkit.getWorld("world").spawnEntity(location, entityType);
 
-
         //creature.setCustomName(this.name);
         //creature.setCustomNameVisible(true);;
-
-
         EntityEquipment equip = creature.getEquipment();
 
         assert equip != null;
